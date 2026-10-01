@@ -51,7 +51,7 @@ def revia_currents(pv):
 
 
 def fig_frekuensi(res):
-    fig, ax = plt.subplots(2, 1, figsize=(COLW, 3.0), sharex=True, gridspec_kw=dict(hspace=0.12))
+    fig, ax = plt.subplots(2, 1, figsize=(COLW, 2.6), sharex=True, gridspec_kw=dict(hspace=0.12))
     order = [("Tanpa VI", C["base"], (0, (1.2, 1.4)), 1.1), ("Rata tanpa SOP", C["trip"], "-", 1.0),
              ("Rata + clip", C["clip"], (0, (4, 1.5)), 1.0), ("ReVIA (adaptif SOP)", C["revia"], "-", 1.8)]
     for nm, col, ls, lw in order:
