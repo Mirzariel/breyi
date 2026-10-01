@@ -1,116 +1,92 @@
-# Brief Pitchdeck BREYI 2026: Second-Life EV Battery Adaptive Virtual Inertia
+# Brief Pitchdeck ReVIA (BREYI 2026)
 
-**Aturan guidebook:** maksimal **7 slide**. Isi wajib: latar belakang/masalah, solusi, metodologi, hasil dan pembahasan, kesimpulan, serta tim peneliti. Format PDF/PPTX, maksimal 100 MB.
-**Sumber angka:** semua angka di bawah diambil dari `extended_abstract/Extended_Abstract_BREYI.pdf`. Jangan menambah angka baru yang tidak ada di naskah, karena juri akan mencocokkan keduanya.
-**Aset siap pakai:** `fig_sistem.png` dan `fig_sistem.pdf` (diagram arsitektur) serta `fig_frekuensi.png` (grafik simulasi).
+**Aturan guidebook:** maksimal 7 slide, wajib memuat latar belakang/masalah, solusi, metodologi, hasil dan pembahasan, kesimpulan, dan tim peneliti.
+**Sumber angka:** `extended_abstract/Extended_Abstract_BREYI.pdf`. Jangan memakai angka yang tidak ada di naskah.
 
----
+**Aset siap pakai:**
+- `figures/render_hero.png`, `render_drawer.png`, `render_front.png`, `render_closed.png`: render 3D dengan latar transparan.
+- `figures/fig_alokasi.pdf/.png` dan `figures/fig_frekuensi.pdf/.png`: grafik hasil.
+- `desain_produk/Desain_Produk_ReVIA.pdf`: halaman 4 berisi alur 6 langkah dan diagram arsitektur yang bisa dipotong.
+- `website/`: landing page. Bisa dibuka saat sesi tanya-jawab untuk memutar model 3D.
 
-## Arahan desain
+## Gaya visual
 
-| Aspek | Ketentuan |
-|---|---|
-| Rasio | 16:9 (final dipresentasikan di layar panitia) |
-| Font | Satu keluarga sans-serif (mis. Montserrat/Inter/Arial) untuk judul dan isi; angka besar bercetak tebal |
-| Warna | Hijau energi `#1A8A4A` (solusi/adaptif), biru `#2C62B5` (elektronika daya), oranye `#C27A10` (kendali/aksen), abu `#888888` (baseline "tanpa VI"). Gunakan warna yang sama dengan grafik agar konsisten |
-| Kepadatan | Satu pesan utama per slide, ditulis sebagai **judul berbentuk kalimat** (bukan "Hasil", tetapi "Alokasi adaptif menambah 37% kapasitas layanan"). Maksimal ±40 kata isi per slide |
-| Angka hero | Tiap slide hasil memiliki 1–3 angka besar (≥40 pt) |
-| Footer | Nama tim, universitas, dan nomor slide `x/7` |
-| Label jujur | Grafik simulasi wajib diberi keterangan kecil "Simulasi representatif, parameter asumsi (bukan data PLN)". Ini justru memperkuat poin keilmiahan metode |
+- 16:9, latar putih hangat `#F5F6F3`.
+- Teks utama `#262C31`, aksen teal `#0F8F84` (dipakai hemat), kuning `#E8A33D` untuk modul kelas B.
+- Font sama seperti website: Manrope/Inter untuk judul dan isi, angka tebal. Bila harus konsisten dengan naskah, pakai Times New Roman.
+- Judul slide berupa kalimat yang menyampaikan pesan, misalnya "Pembagian rata membuat bank trip dalam 0,26 detik", bukan "Hasil".
+- Satu pesan per slide. Isi maksimal ±35 kata, sisanya visual.
+- Footer: ReVIA · Universitas Gadjah Mada · nomor slide x/7.
 
----
+## Slide 1: Masalah
 
-## Slide 1: Latar Belakang & Masalah
-**Judul:** *Nusa Penida menuju 100% EBT, tetapi inersia sistemnya ikut berkurang*
+**Judul:** Nusa Penida menuju 100% EBT, tapi inersianya ikut hilang
 
-Isi:
-- Judul penelitian (kecil, di atas) + logo tim/universitas.
-- Konteks: target Nusa Penida 100% EBT 2030 (Bali NZE 2045); smart microgrid PLN: PLTS Suana 3,5 MWp + BESS 1,8 MWh + PLTD diesel.
-- Rantai masalah (ikon panah): PLTS ↑ → generator diesel online ↓ → inersia ↓ → RoCoF lebih curam & nadir lebih dalam → risiko pelepasan beban dan PLTS sulit ditambah.
-- Peluang: baterai EV bekas memiliki kapasitas yang sudah tidak cukup untuk mobil, tetapi masih kuat untuk **daya singkat**.
-- Tantangan kunci (kotak oranye): *modul bekas tidak seragam. Jika daya dibagi rata, modul terlemah membatasi seluruh bank.*
-
-Visual: peta kecil Nusa Penida + ikon PLTS/diesel/baterai; sketsa kurva frekuensi "inersia tinggi vs rendah" (boleh ilustratif, beri label *ilustrasi konsep*).
-
-Narasi (±45 dtk): mulai dari target Bali, lalu jelaskan kenapa inersia penting, lalu sampaikan bahwa baterai bekas cocok untuk kebutuhan ini tetapi tidak seragam.
+- Kiri: tiga angka besar, yaitu 100% EBT 2030, PLTS Suana 3,5 MWp, dan BESS 1,8 MWh.
+- Kanan: rantai sebab-akibat sebagai garis ikon: PLTS naik → diesel online turun → inersia turun → frekuensi jatuh lebih cepat → risiko pelepasan beban.
+- Bawah, dengan warna kuning: "Baterai mobil listrik bekas cocok untuk daya singkat, tapi kondisinya tidak seragam."
+- Narasi (40 dtk): mulai dari target Bali, jelaskan arti inersia memakai analogi roda gila, lalu masuk ke peluang dan masalah baterai bekas.
 
 ## Slide 2: Solusi
-**Judul:** *Bank baterai EV bekas dengan virtual inertia adaptif berbasis State of Power*
 
-Isi:
-- Diagram `fig_sistem.png` sebagai visual utama (±60% slide).
-- Tiga poin kunci di samping:
-  1. **28 modul EV bekas**, masing-masing punya BMS + DC/DC sendiri, sehingga arus tiap modul dapat diatur atau diisolasi.
-  2. **Virtual inertia:** inverter menyuntikkan daya sebanding RoCoF: `P = −λKv·df/dt − λKd·Δf`.
-  3. **Adaptif SOP:** daya dibagi sesuai kemampuan nyata tiap modul (`p_i ∝ SOP_i`); modul lemah/panas otomatis dikurangi.
-- Badge: "Layanan 100 kW / 10 detik".
+**Judul:** ReVIA: 28 modul bekas, masing-masing di lacinya sendiri
 
-Narasi: tekankan bahwa kebaruannya bukan "baterai bekas" atau "virtual inertia" secara terpisah, tetapi **hasil uji tiap modul langsung menjadi batas layanan dan gain inersia**.
+- Visual utama: `render_hero.png` dengan 3 label, yaitu laci modul, kabinet PCS, dan atap peneduh.
+- Tiga kartu di kanan:
+  1. SOP passport (QR) per modul.
+  2. Laci dengan BMS + DC/DC 6 kW.
+  3. Pembagian daya sesuai SOP: `p_i ∝ SOP_i`.
+- Badge: 100 kW · 10 s.
 
 ## Slide 3: Metodologi
-**Judul:** *Empat tahap: dari kondisi Nusa Penida hingga simulasi frekuensi*
 
-Isi: alur 4 kotak horizontal.
-1. **Kajian kondisi acuan:** dokumen Pemprov Bali & PLN.
-2. **Protokol seleksi modul:** inspeksi → isolasi → kapasitas → OCV–SOC & resistansi → uji pulsa → hitung **SOP** (rumus singkat SOP).
-3. **Desain arsitektur & kendali:** DC/DC per modul vs CHB; hukum kendali VI adaptif.
-4. **Evaluasi:** anggaran daya–energi + simulasi dinamis model frekuensi agregat (Python, 1 ms), 4 kasus pada hardware identik.
+**Judul:** Uji modul, beri SOP, bagi daya, lalu uji di simulasi
 
-Footer kecil: "Parameter yang belum tersedia dari operator dinyatakan sebagai asumsi terbuka."
+- Pakai alur 6 langkah dari halaman 4 Desain Produk: Kumpulkan → Uji → SOP passport → Pasang di laci → Deteksi → Injeksi.
+- Di bawahnya tampilkan persamaan kendali `P = −λK_v·df/dt − λK_d·Δf` dan satu baris evaluasi: "Anggaran daya + simulasi model frekuensi (Python, 1 ms), 4 skema pada perangkat yang sama."
 
-## Slide 4: Hasil 1, Anggaran Daya & Alokasi
-**Judul:** *Pada baterai yang sama, alokasi adaptif menambah 37% kapasitas layanan*
+## Slide 4: Hasil 1, keamanan modul
 
-Isi: bar chart horizontal (buat ulang dari Tabel 1):
+**Judul:** Pembagian rata membuat bank trip dalam 0,26 detik; ReVIA tetap 100 kW
 
-| Skema | Injeksi bersih |
-|---|---|
-| Rata tanpa pembatas | ✗ tidak aman: modul B 30,95 A (>25 A, +24%) |
-| Rata konservatif | 72,7 kW |
-| Rata + clip lokal | 92,2 kW |
-| **Adaptif SOP** | **100 kW** (semua modul ≤ 85,6% SOP) |
+- Visual: `fig_alokasi.png` (bar chart dan grafik arus per modul).
+- Angka besar: **100 kW** vs 72,7 kW, atau **+37%** dengan baterai yang sama.
+- Narasi: modul B melewati 25 A → trip → beban pindah ke modul A → modul A ikut trip. ReVIA menahan semua modul di bawah 86% SOP.
 
-Angka hero: **105,26 kW** kemampuan bersih · **0,40 kWh** energi/kejadian · **85,7 kWh** energi bank (sizing ditentukan *daya*, bukan energi).
+## Slide 5: Hasil 2, frekuensi dan biaya
 
-## Slide 5: Hasil 2, Respons Frekuensi & Keekonomian
-**Judul:** *Deviasi nadir turun 34% dan RoCoF turun 36% dengan energi hanya 0,16 kWh*
+**Judul:** Deviasi nadir turun 34% dengan energi hanya 0,156 kWh
 
-Isi:
-- Grafik `fig_frekuensi.png` (kiri, besar). Label: *Simulasi representatif, gangguan 250 kW, H = 1,5 s.*
-- Tabel mini: Nadir 49,597 → **49,734 Hz**; RoCoF −0,803 → **−0,512 Hz/s**; energi **0,156 kWh**.
-- Satu baris robust: "Konsisten pada H = 1,0–2,0 s."
-- Kotak biaya: **Rp509,34 juta** (28 modul layak dari 35 diuji) vs Rp568,10 juta untuk konfigurasi modul baru (estimasi, bukan penawaran vendor).
+- Visual: `fig_frekuensi.png`.
+- Tiga angka: nadir 49,597 → **49,734 Hz**, RoCoF **−36%**, energi **0,156 kWh**.
+- Kotak kecil: estimasi Rp509 juta, dibanding Rp568 juta untuk konfigurasi sama dengan modul baru.
+- Catatan kecil: "Simulasi representatif, belum memakai data PLN."
+- Narasi jujur: selisih nadir ReVIA dan pembatas lokal hanya 0,008 Hz. Nilai utama ReVIA ada di daya yang bisa dijamin dan modul yang tidak trip.
 
-Narasi jujur (bernilai di mata juri): selisih adaptif vs *clip* pada nadir kecil (0,008 Hz). Nilai utama adaptif adalah **kapasitas yang bisa dijanjikan dan keamanan modul**, bukan sekadar nadir.
+## Slide 6: Kesimpulan dan peta jalan
 
-## Slide 6: Kesimpulan & Peta Jalan
-**Judul:** *Jalur modular untuk menambah inersia sistem pulau dari baterai yang sudah ada*
+**Judul:** Baterai bekas bisa menjadi inersia, asal setiap modul dikenali
 
-Isi:
-- 3 kesimpulan (ikon centang):
-  1. Layanan 100 kW/10 s dari 28 modul bekas, semua modul dalam batas aman.
-  2. Deviasi nadir −34% dan RoCoF −36% pada model representatif.
-  3. Kebaruan: karakterisasi modul → SOP → gain inersia yang dapat ditelusuri.
-- Dampak: mendukung penambahan PLTS Nusa Penida, memperpanjang umur material baterai EV (ekonomi sirkular), dan dapat direplikasi di pulau lain di Indonesia.
-- Peta jalan 5 gerbang (timeline): data PLN & pembanding BESS eksisting → karakterisasi modul nyata → simulasi EMT → uji HIL → demonstrasi terbatas.
+- Tiga kesimpulan singkat: 100 kW aman dari 28 modul bekas; trip berantai dapat dicegah; nadir −34% dan RoCoF −36%.
+- Timeline 5 langkah: data PLN dan pembanding BESS eksisting → karakterisasi modul nyata → simulasi EMT → uji HIL → demonstrasi terbatas.
+- Dampak: menambah ruang PLTS di Nusa Penida dan memberi umur kedua bagi baterai EV.
 
-## Slide 7: Tim Peneliti
-**Judul:** *Tim [Nama Tim]*
+## Slide 7: Tim
 
-Isi: foto + nama + prodi/universitas + peran tiap anggota (contoh: Ketua – kendali & simulasi; Anggota – karakterisasi baterai; Anggota – keekonomian & kebijakan). Tambahkan nama dosen pembimbing bila ada, serta satu kalimat penutup/tagline: *"Baterai bekas, inersia baru untuk pulau energi bersih."*
+**Judul:** Tim ReVIA, Universitas Gadjah Mada
 
----
+- Mirzariel Akmal Norman (ketua), Bagus Aldiguna, Irma Nur Cahyani. Tambahkan foto, prodi, dan peran masing-masing, misalnya kendali dan simulasi, karakterisasi baterai, serta desain dan keekonomian.
+- Penutup: render `render_closed.png` kecil dan kalimat "Baterai bekas, inersia baru."
 
-## Persiapan tanya-jawab juri (bukan untuk slide)
+## Persiapan tanya-jawab
 
 | Pertanyaan | Jawaban inti |
 |---|---|
-| Apakah baterai menghasilkan inersia? | Tidak secara fisik. Inverter meniru respons inersia; baterai menyediakan daya dan energi. |
-| Kenapa tidak cukup pakai SOH 80%? | SOH mengukur kapasitas (energi), sedangkan layanan VI dibatasi daya pulsa, yaitu resistansi dan suhu. Karena itu yang dipakai adalah SOP. |
-| Nusa Penida sudah punya BESS 1,8 MWh? | Benar. Tahap pertama peta jalan adalah membandingkan opsi ini dengan peningkatan kendali BESS eksisting. Bank second-life layak jika kebutuhan cadangan tambahan terbukti. |
-| Datanya dari PLN? | Belum. Parameter sistem bersifat representatif dan terbuka (Lampiran A), dan kode dapat direproduksi. Langkah pertama adalah konfirmasi data operator. |
-| Kenapa bank 85,7 kWh kalau per kejadian hanya 0,4 kWh? | Jumlah modul ditentukan kebutuhan daya dan batas arus, bukan energi. |
-| Grid-forming / black start? | Rancangan awal bersifat grid-following. Grid-forming adalah pengembangan berikutnya. |
-| Lebih murah dan lebih hijau? | Estimasi awal Rp58,8 juta lebih rendah, tetapi bergantung harga dan umur sisa. Perbandingan final memakai NPC dan LCA dengan unit fungsional yang sama. |
-| Modul gagal saat beroperasi? | BMS memutus modul, SOP dan λ turun, sisa daya didistribusikan ulang, dan kekurangan layanan dilaporkan. Satu modul A terisolasi masih menyisakan 100,97 kW. |
-| Kenapa DC/DC per modul, bukan CHB? | Kontrol dan isolasi per modul lebih langsung. Konsekuensinya biaya dan rugi konversi lebih besar; CHB tetap opsi untuk skala lebih besar. |
+| Baterai kan tidak punya inersia? | Benar. Inverter meniru respons inersia dengan menyuntikkan daya sebanding df/dt. Baterai hanya menyediakan daya dan energinya. |
+| Kenapa bukan SOH saja? | SOH mengukur kapasitas. Layanan inersia dibatasi daya pulsa, yang ditentukan resistansi dan suhu. Karena itu yang dipakai SOP. |
+| Data Nusa Penida dari PLN? | Belum. Parameter sistem bersifat representatif dan semuanya tercantum di Lampiran A. Validasi dengan data PLN adalah langkah pertama peta jalan. |
+| Sudah ada BESS 1,8 MWh, kenapa perlu unit baru? | Pembaruan kendali BESS eksisting harus dibandingkan lebih dulu. ReVIA layak bila cadangan inersia tambahan memang dibutuhkan, atau BESS eksisting dipakai untuk layanan energi. |
+| Kenapa 85,7 kWh kalau tiap kejadian hanya butuh 0,4 kWh? | Jumlah modul ditentukan kebutuhan daya dan batas arus, bukan energi. |
+| Asumsi trip 50 ms terlalu keras? | Itu skenario terburuk untuk pembagian rata tanpa pembatas. Pembanding yang adil, yaitu rata + clip, tetap disajikan: 92,2 kW. |
+| Kalau modul rusak saat operasi? | BMS memutus modul tersebut, SOP total dan λ turun, lalu sisa daya dibagi ulang. Tanpa satu modul A, kapasitas masih 100,97 kW. |
+| Lebih murah? | Estimasi awal Rp58,8 juta lebih rendah, tetapi masih bergantung harga dan umur sisa. Perbandingan final memakai NPC. |

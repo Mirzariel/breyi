@@ -42,7 +42,18 @@ CAPS = {
 T_DIST = 1.0
 
 
-def simulate(cap, dP=0.25, t_end=25.0, dt=1e-3, p=PARAM):
+# Skenario modul untuk kasus "rata tanpa SOP": BMS memutus modul bila arusnya
+# melewati batas lebih dari TRIP_DELAY (asumsi), lalu beban pindah ke modul sisa.
+MOD = dict(nA=20, nB=8, U=130.0, RA=0.08, RB=0.16, IA=40.0, IB=25.0, eta=0.94, aux=2.0)
+TRIP_DELAY = 0.05
+
+
+def _current(P_kw, U, R):
+    disc = U * U - 4 * R * P_kw * 1000
+    return float("inf") if disc < 0 else (U - disc ** 0.5) / (2 * R)
+
+
+def simulate(cap, dP=0.25, t_end=25.0, dt=1e-3, p=PARAM, equal_trip=False, log=None):
     f0 = p["f0"]
     M = 2 * p["H"] * p["S_sync"] / f0
     D = p["D_pu"] * p["P_load"] / f0
@@ -52,6 +63,7 @@ def simulate(cap, dP=0.25, t_end=25.0, dt=1e-3, p=PARAM):
     df = np.zeros(n); pvi = np.zeros(n)
     xm = sec = rocof_f = pv = 0.0
     buf = [0.0] * int(round(p["delay"] / dt))
+    active = [MOD["nA"], MOD["nB"]]; overA = overB = 0.0; trips = []; avail = 1e9
     for k in range(1, n):
         dist = dP if t[k] >= T_DIST else 0.0
         dfdt = (xm + pv - dist - D * df[k - 1]) / M
@@ -62,10 +74,32 @@ def simulate(cap, dP=0.25, t_end=25.0, dt=1e-3, p=PARAM):
         te = t[k] - T_DIST
         ramp = 1.0 if te < 10 else max(0.0, 1 - (te - 10) / 5)
         cmd = min(max(cmd, 0.0), cap * ramp)
+        if equal_trip:
+            cmd = min(cmd, avail)
         pv += dt / p["T_inv"] * (cmd - pv)
+        if equal_trip and pv > 1e-6:
+            nA, nB = active
+            n = nA + nB
+            if n == 0:
+                avail = 0.0
+            else:
+                pm_kw = (pv * 1000 / MOD["eta"] + MOD["aux"]) / n
+                iA = _current(pm_kw, MOD["U"], MOD["RA"]) if nA else 0
+                iB = _current(pm_kw, MOD["U"], MOD["RB"]) if nB else 0
+                overA = overA + dt if (nA and iA > MOD["IA"]) else 0.0
+                overB = overB + dt if (nB and iB > MOD["IB"]) else 0.0
+                if overB > TRIP_DELAY:
+                    active[1] = 0; overB = 0.0; trips.append((round(t[k] - T_DIST, 3), "B"))
+                if overA > TRIP_DELAY:
+                    active[0] = 0; overA = 0.0; trips.append((round(t[k] - T_DIST, 3), "A"))
+                if active == [0, 0]:
+                    avail = 0.0
+                if log is not None:
+                    log.append((t[k], iA if nA else 0.0, iB if nB else 0.0))
         sec += dt * (-p["Ki_sec"] * df[k])
         xm += dt / p["T_gov"] * (-Kg * df[k] + sec - xm)
         pvi[k] = pv
+    simulate.trips = trips
     return t, df, pvi
 
 

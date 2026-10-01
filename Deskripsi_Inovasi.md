@@ -1,15 +1,13 @@
 # Deskripsi Inovasi/Invensi (untuk field formulir)
 
-> Salin salah satu versi ke field "Deskripsi dari Inovasi/Invensi". Versi panjang ±210 kata; versi pendek ±90 kata bila field dibatasi.
+## Versi panjang (±190 kata)
 
-## Versi panjang (disarankan)
+ReVIA adalah unit virtual inertia yang memakai 28 modul baterai mobil listrik bekas untuk menahan jatuhnya frekuensi di microgrid PLTS Nusa Penida. Pulau ini ditargetkan memakai 100% energi terbarukan pada 2030. Ketika PLTS bertambah dan generator diesel yang beroperasi berkurang, inersia sistem turun, sehingga gangguan kecil pun membuat frekuensi jatuh lebih cepat.
 
-Nusa Penida ditargetkan beroperasi dengan 100% energi terbarukan pada 2030. Seiring bertambahnya PLTS berbasis inverter dan berkurangnya generator diesel yang beroperasi, inersia sistem pulau menurun. Akibatnya, gangguan daya yang sama membuat frekuensi turun lebih cepat dan lebih dalam, sehingga berisiko memicu pelepasan beban dan membatasi penambahan PLTS.
+Baterai bekas cocok untuk tugas ini karena virtual inertia hanya butuh daya besar selama beberapa detik. Masalahnya, kondisi modul bekas tidak seragam. Di ReVIA, setiap modul diuji lalu diberi SOP passport, yaitu batas daya 10 detik yang dicetak sebagai QR di lacinya. Setiap laci punya BMS dan konverter DC/DC sendiri, dan pengendali membagi daya sesuai SOP tiap modul.
 
-Inovasi ini memanfaatkan baterai kendaraan listrik (EV) bekas (second-life) sebagai penyedia virtual inertia, yaitu injeksi daya cepat selama beberapa detik yang meniru respons rotor generator. Layanan ini menuntut daya besar dengan energi kecil, sehingga cocok untuk baterai yang kapasitasnya sudah tidak memadai bagi kendaraan. Kendala utama baterai bekas adalah kondisinya yang tidak seragam. Untuk mengatasinya, setiap modul dikarakterisasi untuk memperoleh State of Power (SOP), lalu dihubungkan melalui konverter DC/DC per modul. Kendali virtual inertia adaptif kemudian membagi daya sebanding dengan SOP tiap modul dan menurunkan gain secara otomatis ketika modul melemah.
+Pada perangkat yang sama, cara ini memberi layanan aman 100 kW. Pembagian rata yang konservatif hanya aman sampai 72,7 kW, sedangkan pembagian rata tanpa pembatas membuat modul trip berantai dalam 0,26 detik. Simulasi representatif menunjukkan deviasi nadir frekuensi turun 34% dan RoCoF turun 36%, dengan energi 0,156 kWh per kejadian. Estimasi biaya unit adalah Rp509 juta.
 
-Prarancangan 28 modul (Rp509 juta) mampu memberikan layanan 100 kW/10 detik tanpa satu pun modul melampaui batas arusnya. Kapasitas layanan ini 37% lebih besar daripada pembagian daya rata yang konservatif. Simulasi representatif menunjukkan deviasi nadir frekuensi berkurang 34% dan RoCoF berkurang 36%, dengan energi hanya 0,16 kWh per kejadian.
+## Versi pendek (±80 kata)
 
-## Versi pendek
-
-Bank baterai EV bekas (second-life) yang menyediakan virtual inertia untuk menahan penurunan frekuensi microgrid PLTS Nusa Penida. Setiap modul bekas diuji untuk memperoleh State of Power (SOP) dan dihubungkan melalui konverter DC/DC tersendiri. Kendali adaptif membagi daya sesuai kemampuan nyata tiap modul. Prarancangan 28 modul memberikan layanan 100 kW/10 detik dengan semua modul tetap dalam batas aman. Kapasitas layanannya 37% lebih besar daripada pembagian rata. Simulasi representatif menunjukkan deviasi nadir frekuensi berkurang 34% dan RoCoF berkurang 36%.
+ReVIA memakai 28 modul baterai mobil listrik bekas sebagai virtual inertia untuk microgrid PLTS Nusa Penida. Setiap modul diuji dan diberi SOP passport (batas daya 10 detik). Setiap modul juga dipasang di laci dengan BMS dan DC/DC sendiri, lalu mendapat porsi daya sesuai kemampuannya. Hasilnya, layanan aman mencapai 100 kW. Pembagian rata hanya aman sampai 72,7 kW. Pada simulasi representatif, deviasi nadir frekuensi turun 34% dan RoCoF turun 36%.
