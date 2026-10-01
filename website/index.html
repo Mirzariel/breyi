@@ -1,0 +1,462 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ReVIA — Inersia virtual dari baterai EV bekas</title>
+<meta name="description" content="ReVIA: baterai EV bekas yang membagi daya sesuai batas amannya masing-masing untuk inersia virtual di microgrid PLTS Nusa Penida, Bali. Proyek riset mahasiswa Universitas Gadjah Mada, BREYI 2026.">
+<meta name="theme-color" content="#f5f6f3">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23262c31'/%3E%3Cpath d='M9 23V9h8a4.5 4.5 0 0 1 0 9h-8m7 0 6 5' fill='none' stroke='%230f8f84' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<script>document.documentElement.classList.add('js');</script>
+<script type="importmap">
+{ "imports": {
+  "three": "./vendor/three/build/three.module.min.js",
+  "three/addons/": "./vendor/three/examples/jsm/"
+} }
+</script>
+</head>
+<body>
+
+<!-- ikon: garis 1,5px, viewBox 24 -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="i-collect" viewBox="0 0 24 24"><path d="M3 7.5 12 3l9 4.5v9L12 21l-9-4.5z"/><path d="M3 7.5 12 12l9-4.5M12 12v9"/></symbol>
+    <symbol id="i-test" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M6 12h3l1.5-4 3 8 1.5-4H18"/></symbol>
+    <symbol id="i-passport" viewBox="0 0 24 24"><rect x="3" y="3" width="6" height="6" rx="1"/><rect x="15" y="3" width="6" height="6" rx="1"/><rect x="3" y="15" width="6" height="6" rx="1"/><path d="M13 14h3M20 13v4M13 18v3M16.5 21H21M17 17.5h1"/></symbol>
+    <symbol id="i-drawer" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="1.5"/><path d="M9 14h6M6.5 9.5h.01"/></symbol>
+    <symbol id="i-sense" viewBox="0 0 24 24"><path d="M3.5 4v15.5H21"/><path d="M6.5 8c2.5 0 3 1 4.5 4.2s2.800 4.300 4.800 4.300c1.400 0 2.300-.5 3.200-1.200"/></symbol>
+    <symbol id="i-split" viewBox="0 0 24 24"><path d="M3 12h6M9 12l5-6h7M9 12h12M9 12l5 6h7"/></symbol>
+    <symbol id="i-inject" viewBox="0 0 24 24"><path d="M9 3v4M15 3v4M6 7h12v4a6 6 0 0 1-12 0zM12 17v4"/></symbol>
+    <symbol id="i-handover" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><path d="M9 6v12M15 6v12"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.500v13l11-6.500z"/></symbol>
+  </defs>
+</svg>
+
+<a class="skip" href="#konten">Lewati ke konten</a>
+
+<header class="site-header" id="top">
+  <div class="wrap bar">
+    <a class="brand" href="#top" aria-label="ReVIA, ke atas"><span>Re</span><span class="v">VIA</span></a>
+    <nav id="nav" class="nav" aria-label="Navigasi utama">
+      <a href="#masalah">Masalah</a>
+      <a href="#cara-kerja">Cara kerja</a>
+      <a href="#laci">Laci</a>
+      <a href="#hasil">Hasil</a>
+      <a href="#biaya">Biaya</a>
+      <a href="#peta-jalan">Peta jalan</a>
+      <a href="#tim">Tim</a>
+    </nav>
+    <span class="badge mono">BREYI 2026</span>
+    <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="nav" aria-label="Buka menu"><span></span><span></span></button>
+  </div>
+</header>
+
+<main id="konten">
+
+<!-- ============ HERO ============ -->
+<section class="hero" aria-labelledby="h-hero">
+  <div class="hero-inner">
+    <div class="hero-stage" id="heroStage">
+      <img class="poster" src="assets/hero.png" alt="Render unit ReVIA: empat kabinet baterai dan satu kabinet PCS di bawah kanopi, dengan satu laci terbuka." width="2400" height="1500">
+      <div class="gl-host" id="heroGL" role="img" aria-label="Model 3D unit ReVIA. Seret untuk memutar."></div>
+      <span class="tag" data-anchor="bat">BAT-1 sampai BAT-4 · 28 modul</span>
+      <span class="tag" data-anchor="pcs">PCS 125 kVA + pengendali VI</span>
+      <span class="tag" data-anchor="trafo">Trafo 0,4/20 kV</span>
+      <div class="stage-ui" id="heroUI" hidden>
+        <span class="mono hint">Seret untuk memutar</span>
+        <div class="btns">
+          <button type="button" class="ibtn" id="heroRot" aria-pressed="true" aria-label="Jeda putaran otomatis"><svg><use href="#i-pause"/></svg></button>
+          <button type="button" class="ibtn" id="heroOut" aria-label="Perkecil"><svg><use href="#i-minus"/></svg></button>
+          <button type="button" class="ibtn" id="heroIn" aria-label="Perbesar"><svg><use href="#i-plus"/></svg></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="wrap hero-copy">
+      <div class="hero-text">
+        <p class="eyebrow mono">BREYI 2026 · Bali Renewable Energy Young Innovators</p>
+        <h1 id="h-hero">Baterai EV bekas untuk menjaga frekuensi microgrid Bali.</h1>
+        <p class="lead">ReVIA membagi daya ke tiap modul sesuai batas amannya sendiri, sehingga modul bekas yang tidak seragam tetap bisa memberi inersia virtual 100 kW selama 10 detik.</p>
+        <div class="cta">
+          <a class="btn primary" href="#cara-kerja">Lihat cara kerja <svg><use href="#i-arrow"/></svg></a>
+          <a class="btn ghost" href="#hasil">Hasil simulasi</a>
+        </div>
+        <p class="small muted who">Proyek riset mahasiswa Universitas Gadjah Mada</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <dl class="keys">
+      <div class="key">
+        <dt class="mono">Daya aman</dt>
+        <dd><span class="num">100 kW</span><span class="unit"> / 10 s</span></dd>
+        <dd class="sub">dari 28 modul dengan batas daya berbeda-beda</dd>
+      </div>
+      <div class="key">
+        <dt class="mono">Gangguan 250 kW</dt>
+        <dd><span class="num">−34%</span></dd>
+        <dd class="sub">deviasi nadir frekuensi: 49,597 Hz menjadi 49,734 Hz</dd>
+      </div>
+      <div class="key">
+        <dt class="mono">Modul bekas EV</dt>
+        <dd><span class="num">28</span><span class="unit"> modul</span></dd>
+        <dd class="sub">20 kelas A dan 8 kelas B, dipilih dari 35 yang diuji</dd>
+      </div>
+    </dl>
+  </div>
+</section>
+
+<!-- ============ 01 MASALAH ============ -->
+<section id="masalah" class="sec" aria-labelledby="h-masalah">
+  <div class="wrap grid">
+    <header class="sec-head col-12">
+      <p class="eyebrow mono"><span>01</span> Masalah</p>
+    </header>
+    <div class="col-5 col-m-12 copy reveal">
+      <h2 id="h-masalah">Makin banyak surya, makin tipis inersia.</h2>
+      <p>Rotor generator diesel itu berat dan berputar. Saat pembangkit atau beban tiba-tiba berubah, massa berputar itu menahan frekuensi agar tidak jatuh terlalu cepat. Inverter PLTS tidak punya rotor.</p>
+      <p>Nusa Penida menargetkan 100% energi terbarukan pada 2030, bagian dari Bali Net Zero Emission 2045. Microgrid pulau yang terisolasi ini (PLN, November 2025) menggabungkan PLTS Suana 3,5 MWp, BESS 1,8 MWh, dan PLTD. Makin banyak PV dan makin sedikit unit diesel yang menyala, makin kecil inersianya. Frekuensi turun lebih cepat dan lebih dalam setelah gangguan.</p>
+      <dl class="gloss">
+        <div><dt class="mono">RoCoF</dt><dd>laju perubahan frekuensi, dalam Hz per detik</dd></div>
+        <div><dt class="mono">Nadir</dt><dd>titik terendah frekuensi setelah gangguan</dd></div>
+      </dl>
+    </div>
+    <figure class="col-7 col-m-12 chart-card reveal" id="chartProblem">
+      <figcaption class="chart-title">
+        <span class="t">Frekuensi setelah gangguan 250 kW</span>
+        <span class="s mono">sistem diesel representatif, 3 MVA, H = 1,5 s</span>
+      </figcaption>
+      <div class="chart-host" data-chart="problem" role="img" aria-label="Grafik frekuensi terhadap waktu. Tanpa virtual inertia frekuensi turun ke 49,597 Hz; dengan ReVIA hanya turun ke 49,734 Hz."></div>
+      <div class="readout mono" id="probReadout" aria-live="off">
+        <span class="r-t">t = 0,50 s</span>
+        <span class="r-a"><i class="dot ink"></i>Tanpa VI <b>49,597 Hz</b></span>
+        <span class="r-b"><i class="dot teal"></i>ReVIA <b>49,734 Hz</b></span>
+      </div>
+    </figure>
+  </div>
+</section>
+
+<!-- ============ 02 CARA KERJA ============ -->
+<section id="cara-kerja" class="sec alt" aria-labelledby="h-cara">
+  <div class="wrap grid">
+    <header class="sec-head col-12">
+      <p class="eyebrow mono"><span>02</span> Cara kerja</p>
+    </header>
+    <div class="col-7 col-m-12 copy reveal">
+      <h2 id="h-cara">Setiap modul bekerja sampai batasnya sendiri.</h2>
+    </div>
+    <div class="col-5 col-m-12 copy reveal intro-r">
+      <p>Modul baterai mobil listrik yang tidak lagi layak jalan masih bisa mengeluarkan daya besar dalam waktu singkat. Itu yang dibutuhkan inersia virtual: inverter menyuntikkan daya sebanding dengan RoCoF selama beberapa detik, seperti rotor.</p>
+    </div>
+
+    <div class="col-12 flow" id="flow">
+      <div class="phase mono"><span>Sebelum dipasang</span></div>
+      <ol class="steps">
+        <li class="step">
+          <span class="ico"><svg><use href="#i-collect"/></svg></span>
+          <div class="st"><span class="n mono">01</span><h3>Kumpulkan</h3><p>Modul EV bekas dikumpulkan. Tidak cocok lagi untuk mobil, tetap mampu memberi daya singkat.</p></div>
+        </li>
+        <li class="step">
+          <span class="ico"><svg><use href="#i-test"/></svg></span>
+          <div class="st"><span class="n mono">02</span><h3>Inspeksi dan uji</h3><p>Kapasitas, resistansi, dan uji pulsa. Dari 35 modul diuji, 28 yang lolos.</p></div>
+        </li>
+        <li class="step hl">
+          <span class="ico"><svg><use href="#i-passport"/></svg></span>
+          <div class="st"><span class="n mono">03</span><h3>SOP passport</h3><p>Tiap modul mendapat batas daya amannya selama 10 detik, dicetak sebagai QR.</p></div>
+        </li>
+        <li class="step">
+          <span class="ico"><svg><use href="#i-drawer"/></svg></span>
+          <div class="st"><span class="n mono">04</span><h3>Pasang di laci</h3><p>Satu modul per laci, lengkap dengan BMS dan konverter DC/DC dua arah terisolasi 6 kW.</p></div>
+        </li>
+      </ol>
+      <div class="phase mono"><span>Saat frekuensi turun</span></div>
+      <ol class="steps" start="5">
+        <li class="step">
+          <span class="ico"><svg><use href="#i-sense"/></svg></span>
+          <div class="st"><span class="n mono">05</span><h3>Baca f dan RoCoF</h3><p>Pengendali VI mengukur frekuensi dan RoCoF di titik sambung.</p></div>
+        </li>
+        <li class="step hl">
+          <span class="ico"><svg><use href="#i-split"/></svg></span>
+          <div class="st"><span class="n mono">06</span><h3>Bagi sesuai SOP</h3><p>Daya dibagi sebanding SOP tiap modul. Bila modul melemah, λ diperkecil otomatis.</p></div>
+        </li>
+        <li class="step">
+          <span class="ico"><svg><use href="#i-inject"/></svg></span>
+          <div class="st"><span class="n mono">07</span><h3>Injeksi</h3><p>Daya masuk ke microgrid dalam sekitar 100 ms.</p></div>
+        </li>
+        <li class="step">
+          <span class="ico"><svg><use href="#i-handover"/></svg></span>
+          <div class="st"><span class="n mono">08</span><h3>Serah-terima</h3><p>Setelah 10 detik, governor diesel mengambil alih.</p></div>
+        </li>
+      </ol>
+    </div>
+
+    <div class="col-5 col-m-12 passport-wrap reveal">
+      <h3 class="h3">Paspor untuk setiap modul</h3>
+      <p>Modul bekas punya kapasitas yang sama tetapi resistansi dan batas arus yang berbeda. SOP (State of Power) merangkum itu jadi satu angka: daya maksimum yang aman diberikan modul selama 10 detik. Angka dan kelasnya tercetak sebagai QR di laci.</p>
+      <figure class="passport" aria-label="Contoh SOP passport modul M-17, kelas A">
+        <div class="pp-top"><span class="mono">SOP PASSPORT</span><span class="cls a mono">KELAS A</span></div>
+        <div class="pp-body">
+          <dl>
+            <div><dt class="mono">Modul</dt><dd>M-17</dd></div>
+            <div><dt class="mono">SOH</dt><dd>80%</dd></div>
+            <div><dt class="mono">Kapasitas</dt><dd>31,5 Ah nominal</dd></div>
+            <div><dt class="mono">Susunan</dt><dd>36s2p, 126 V</dd></div>
+            <div class="sop"><dt class="mono">SOP 10 s</dt><dd>5,07 kW</dd></div>
+          </dl>
+          <canvas id="qr" class="qr" width="168" height="168" role="img" aria-label="Contoh kode QR (ilustrasi)"></canvas>
+        </div>
+      </figure>
+    </div>
+
+    <div class="col-7 col-m-12 split-wrap reveal">
+      <h3 class="h3">Kenapa tidak dibagi rata?</h3>
+      <div class="seg" role="group" aria-label="Skema pembagian daya">
+        <button type="button" class="on" data-mode="equal" aria-pressed="true">Bagi rata</button>
+        <button type="button" data-mode="sop" aria-pressed="false">Sesuai SOP</button>
+      </div>
+      <figure class="split-card">
+        <div class="bars" id="splitBars" role="img" aria-label="28 batang modul. Pada bagi rata, modul kelas B melewati batasnya; pada pembagian sesuai SOP, semua modul di bawah batas."></div>
+        <div class="legend-row mono">
+          <span><i class="sq a"></i>Kelas A, batas 5,07 kW</span>
+          <span><i class="sq b"></i>Kelas B, batas 3,15 kW</span>
+          <span><i class="ln"></i>Batas SOP</span>
+        </div>
+        <p class="split-note" id="splitNote" aria-live="polite"></p>
+        <p class="small muted">Ilustrasi hitungan: 100 kW dibagi ke 20 modul A dan 8 modul B. Pada simulasi penuh, semua modul tetap di bawah 85,6% SOP.</p>
+      </figure>
+      <div class="law">
+        <p class="mono lab">Hukum kendali</p>
+        <p class="eq">P = −λ·K<sub>v</sub>·df/dt − λ·K<sub>d</sub>·Δf</p>
+        <p class="eq">p<sub>i</sub> = P · SOP<sub>i</sub> / ΣSOP</p>
+        <p class="small muted">K<sub>v</sub> = 80 kW·s/Hz, K<sub>d</sub> = 300 kW/Hz. λ turun otomatis jika ΣSOP turun.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 03 LACI ============ -->
+<section id="laci" class="sec" aria-labelledby="h-laci">
+  <div class="wrap grid">
+    <header class="sec-head col-12">
+      <p class="eyebrow mono"><span>03</span> Di dalam laci</p>
+    </header>
+    <div class="col-7 col-m-12 copy reveal">
+      <h2 id="h-laci">Satu modul, satu laci, satu konverter.</h2>
+    </div>
+    <div class="col-5 col-m-12 copy reveal intro-r">
+      <p>Karena tiap modul punya BMS dan konverter sendiri, modul bisa didorong sampai batasnya masing-masing, atau diisolasi tanpa mengganggu yang lain. Empat kabinet berisi 7 laci, total 28 modul.</p>
+    </div>
+
+    <div class="col-8 col-m-12 drawer-card reveal">
+      <div class="drawer-stage" id="drawerStage">
+        <img class="poster" src="assets/drawer.png" alt="Render laci ReVIA dalam tampilan terurai: modul baterai, BMS, konverter DC/DC, dan panel depan." width="1600" height="1000">
+        <div class="gl-host" id="drawerGL" role="img" aria-label="Model 3D laci baterai dalam tampilan terurai. Seret untuk memutar."></div>
+        <div id="hotspots"></div>
+      </div>
+      <div class="drawer-ctl">
+        <label class="rng" for="explode"><span class="mono">Urai</span>
+          <input id="explode" type="range" min="0" max="1" step="0.01" value="0" aria-valuetext="0%">
+          <span class="mono val" id="explodeVal">0%</span>
+        </label>
+        <div class="seg small" role="group" aria-label="Kelas modul">
+          <button type="button" class="on" data-cls="A" aria-pressed="true">Kelas A</button>
+          <button type="button" data-cls="B" aria-pressed="false">Kelas B</button>
+        </div>
+      </div>
+    </div>
+
+    <ol class="col-4 col-m-12 parts reveal" id="parts">
+      <li data-hs="1"><button type="button"><span class="pn mono">1</span><span class="pt"><b>Modul baterai</b><span>NMC/hard-carbon 36s2p, 126 V, 31,5 Ah nominal. Kelas A: SOH 80%, SOP 5,07 kW. Kelas B: SOH 70%, SOP 3,15 kW.</span></span></button></li>
+      <li data-hs="2"><button type="button"><span class="pn mono">2</span><span class="pt"><b>BMS</b><span>Satu per laci. Memantau modul dan menjaganya di dalam batas SOP.</span></span></button></li>
+      <li data-hs="3"><button type="button"><span class="pn mono">3</span><span class="pt"><b>DC/DC 6 kW</b><span>Dua arah dan terisolasi, sehingga modul bisa didorong ke batasnya sendiri atau dilepas dari bank.</span></span></button></li>
+      <li data-hs="4"><button type="button"><span class="pn mono">4</span><span class="pt"><b>Panel depan</b><span>Label modul, LED status (hijau kelas A, ambar kelas B), dan QR SOP passport.</span></span></button></li>
+      <li data-hs="5"><button type="button"><span class="pn mono">5</span><span class="pt"><b>Kabel HV</b><span>Menghubungkan terminal modul ke konverter DC/DC.</span></span></button></li>
+    </ol>
+
+    <div class="col-12 specs reveal">
+      <h3 class="h3 mono">Spesifikasi unit</h3>
+      <dl class="spec-grid">
+        <div><dt class="mono">Kabinet baterai</dt><dd>4 unit (BAT-1 sampai BAT-4), masing-masing 7 laci</dd></div>
+        <div><dt class="mono">Modul</dt><dd>28: 20 kelas A (SOH 80%, SOP 5,07 kW), 8 kelas B (SOH 70%, SOP 3,15 kW)</dd></div>
+        <div><dt class="mono">PCS</dt><dd>Inverter 125 kVA, pengendali VI, layar HMI</dd></div>
+        <div><dt class="mono">Konverter per laci</dt><dd>DC/DC dua arah terisolasi, 6 kW</dd></div>
+        <div><dt class="mono">Sambungan</dt><dd>Trafo pad-mounted 0,4/20 kV</dd></div>
+        <div><dt class="mono">Lokasi</dt><dd>Pelat beton di bawah kanopi peneduh, luar ruang, lingkungan pesisir tropis</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 04 HASIL ============ -->
+<section id="hasil" class="sec alt" aria-labelledby="h-hasil">
+  <div class="wrap grid">
+    <header class="sec-head col-12">
+      <p class="eyebrow mono"><span>04</span> Hasil</p>
+    </header>
+    <div class="col-7 col-m-12 copy reveal">
+      <h2 id="h-hasil">100 kW dari perangkat keras yang sama.</h2>
+    </div>
+    <div class="col-5 col-m-12 copy reveal intro-r">
+      <p>Dengan 28 modul yang sama, hanya cara membagi dayanya yang berbeda. Hasil di bawah berasal dari perhitungan pra-desain dan simulasi representatif.</p>
+    </div>
+
+    <!-- (a) -->
+    <div class="col-12 card bars-card reveal" id="allocCard">
+      <div class="card-head">
+        <h3 class="h3">Daya layanan yang aman, per skema pembagian</h3>
+        <p class="small muted">Perangkat keras identik: 28 modul, kelas A dan B.</p>
+      </div>
+      <ul class="hbars" id="allocBars">
+        <li class="fail" data-v="0">
+          <span class="lb">Bagi rata tanpa SOP</span>
+          <span class="track"><span class="fail-mark"></span></span>
+          <span class="vl"><b>Gagal</b><small>trip beruntun: kelas B 0,21 s, kelas A 0,26 s, seluruh bank lepas</small></span>
+        </li>
+        <li data-v="72.7">
+          <span class="lb">Bagi rata, konservatif</span>
+          <span class="track"><span class="fill ink"></span></span>
+          <span class="vl"><b>72,7 kW</b></span>
+        </li>
+        <li data-v="92.2">
+          <span class="lb">Bagi rata + clip lokal</span>
+          <span class="track"><span class="fill ink"></span></span>
+          <span class="vl"><b>92,2 kW</b></span>
+        </li>
+        <li class="best" data-v="100">
+          <span class="lb">ReVIA, SOP adaptif</span>
+          <span class="track"><span class="fill teal"></span></span>
+          <span class="vl"><b>100 kW</b><small>semua modul ≤ 85,6% SOP · +37% dari konservatif</small></span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- (b)+(c) -->
+    <div class="col-12 card freq-card reveal" id="caseCard">
+      <div class="card-head row">
+        <div>
+          <h3 class="h3">Frekuensi dan daya injeksi, gangguan 250 kW</h3>
+          <p class="small muted">Pilih skema untuk dibandingkan dengan kasus tanpa VI (garis abu-abu).</p>
+        </div>
+        <div class="seg small wrapseg" role="group" aria-label="Rentang waktu" id="rangeSeg">
+          <button type="button" class="on" data-range="3" aria-pressed="true">0–3 s</button>
+          <button type="button" data-range="10" aria-pressed="false">0–10 s</button>
+        </div>
+      </div>
+      <div class="chips" id="caseChips" role="group" aria-label="Pilih skema"></div>
+      <div class="freq-grid">
+        <div class="chart-host big" data-chart="cases" role="img" aria-label="Grafik frekuensi dan daya injeksi untuk skema terpilih."></div>
+        <div class="metrics" id="metrics" aria-live="polite"></div>
+      </div>
+    </div>
+
+    <p class="col-12 note small muted reveal">Simulasi representatif, parameter asumsi (sistem diesel 3 MVA, H = 1,5 s). Bukan data lapangan PLN; validasi dengan data PLN adalah tahap berikutnya. Energi bank sekitar 85,7 kWh, jadi ukuran sistem ditentukan oleh daya, bukan energi.</p>
+  </div>
+</section>
+
+<!-- ============ 05 BIAYA & DAMPAK ============ -->
+<section id="biaya" class="sec" aria-labelledby="h-biaya">
+  <div class="wrap grid">
+    <header class="sec-head col-12">
+      <p class="eyebrow mono"><span>05</span> Biaya dan dampak</p>
+    </header>
+    <div class="col-5 col-m-12 copy reveal">
+      <h2 id="h-biaya">Modul bekas lebih murah, dan dipakai lebih lama.</h2>
+      <p>Untuk konfigurasi yang sama, modul bekas lebih murah dari modul baru walaupun ada biaya uji tambahan: 35 modul diuji untuk mendapat 28 yang layak.</p>
+      <ul class="impact">
+        <li><b>28 modul</b> mendapat pemakaian kedua alih-alih jadi limbah: 20 kelas A, 8 kelas B.</li>
+        <li><b>0,156 kWh</b> terpakai per kejadian dari bank sekitar 85,7 kWh. Yang menentukan adalah daya, jadi modul yang sudah turun SOH masih berguna.</li>
+        <li>Mendukung target <b>100% energi terbarukan Nusa Penida pada 2030</b> dengan menutup celah inersia saat diesel dikurangi.</li>
+      </ul>
+    </div>
+    <div class="col-7 col-m-12 card cost-card reveal" id="costCard">
+      <div class="card-head">
+        <h3 class="h3">Biaya ilustratif, konfigurasi sama</h3>
+      </div>
+      <ul class="hbars cost">
+        <li data-v="509.34">
+          <span class="lb">Modul bekas<br><small>35 diuji, 28 lolos</small></span>
+          <span class="track"><span class="fill teal"></span></span>
+          <span class="vl"><b>Rp509,34 juta</b></span>
+        </li>
+        <li data-v="568.10">
+          <span class="lb">Modul baru<br><small>konfigurasi sama</small></span>
+          <span class="track"><span class="fill ink"></span></span>
+          <span class="vl"><b>Rp568,10 juta</b></span>
+        </li>
+      </ul>
+      <p class="small muted">Selisih Rp58,76 juta. Estimasi ilustratif, bukan penawaran vendor.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 06 PETA JALAN ============ -->
+<section id="peta-jalan" class="sec alt" aria-labelledby="h-peta">
+  <div class="wrap grid">
+    <header class="sec-head col-12">
+      <p class="eyebrow mono"><span>06</span> Peta jalan</p>
+    </header>
+    <div class="col-7 col-m-12 copy reveal">
+      <h2 id="h-peta">Dari perhitungan ke demonstrasi terbatas.</h2>
+    </div>
+    <div class="col-5 col-m-12 copy reveal intro-r">
+      <p>Hasil sekarang masih di atas kertas dan simulasi. Lima tahap berikut yang membuatnya terbukti di perangkat keras.</p>
+    </div>
+    <ol class="col-12 road reveal" id="road">
+      <li><span class="n mono">01</span><h3>Data dan pembanding</h3><p>Mengumpulkan data dan membandingkan dengan BESS yang sudah ada bersama PLN.</p></li>
+      <li><span class="n mono">02</span><h3>Karakterisasi modul</h3><p>Menguji modul nyata untuk mendapatkan parameter SOP.</p></li>
+      <li><span class="n mono">03</span><h3>Kalibrasi model</h3><p>Mengkalibrasi model SOP dan menjalankan simulasi EMT.</p></li>
+      <li><span class="n mono">04</span><h3>Hardware-in-the-loop</h3><p>Membandingkan pembagian tetap dengan adaptif pada perangkat keras.</p></li>
+      <li><span class="n mono">05</span><h3>Demonstrasi terbatas</h3><p>Uji coba dalam skala terbatas.</p></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============ 07 TIM ============ -->
+<section id="tim" class="sec" aria-labelledby="h-tim">
+  <div class="wrap grid">
+    <header class="sec-head col-12">
+      <p class="eyebrow mono"><span>07</span> Tim</p>
+    </header>
+    <div class="col-5 col-m-12 copy reveal">
+      <h2 id="h-tim">Tiga mahasiswa, satu proyek.</h2>
+      <p>ReVIA dikerjakan untuk BREYI 2026 oleh tim dari Universitas Gadjah Mada.</p>
+    </div>
+    <ul class="col-7 col-m-12 team reveal">
+      <li><span class="av lead" aria-hidden="true">MN</span><div><h3>Mirzariel Akmal Norman</h3><p class="mono">Ketua</p></div></li>
+      <li><span class="av" aria-hidden="true">BA</span><div><h3>Bagus Aldiguna</h3><p class="mono">Anggota</p></div></li>
+      <li><span class="av" aria-hidden="true">IC</span><div><h3>Irma Nur Cahyani</h3><p class="mono">Anggota</p></div></li>
+    </ul>
+  </div>
+</section>
+</main>
+
+<footer class="footer">
+  <div class="wrap grid">
+    <div class="col-5 col-m-12">
+      <a class="brand light" href="#top" aria-label="ReVIA, ke atas"><span>Re</span><span class="v">VIA</span></a>
+      <p class="f-sub">Repurposed-battery Virtual Inertia, Adaptive</p>
+    </div>
+    <div class="col-7 col-m-12 f-meta">
+      <p class="mono lab">Judul lengkap</p>
+      <p class="f-title">Repurposing Second Life EV Batteries for Adaptive Virtual Inertia in Bali's Solar PV Microgrid to Enhance Frequency Stability and Support Renewable Energy Integration</p>
+    </div>
+    <div class="col-12 f-bottom">
+      <span>BREYI 2026 · Bali Renewable Energy Young Innovators</span>
+      <span>Universitas Gadjah Mada</span>
+      <span>Hasil adalah perhitungan pra-desain dan simulasi representatif, bukan data lapangan PLN.</span>
+    </div>
+  </div>
+</footer>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
