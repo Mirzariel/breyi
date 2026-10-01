@@ -30,6 +30,8 @@ function nav() {
     });
   }, { rootMargin: '-45% 0px -50% 0px' });
   links.forEach((_, id) => { const s = document.getElementById(id); if (s) io.observe(s); });
+  const heroEl = $('.hero');
+  if (heroEl) new IntersectionObserver(([e]) => { if (e.isIntersecting) links.forEach((x) => x.classList.remove('active')); }, { rootMargin: '-45% 0px -50% 0px' }).observe(heroEl);
 }
 
 function reveal() {
@@ -80,19 +82,20 @@ function split() {
     m.appendChild(document.createElement('i')); host.appendChild(m);
     return { m, i: m.firstChild, c };
   });
+  // Angka per modul dari perhitungan paper (efisiensi 0,94, beban bantu 2 kW)
+  const LOAD = { equal: { A: 3.87, B: 3.87 }, sop: { A: 4.34, B: 2.70 } };
   function setMode(mode) {
     cells.forEach(({ m, i, c }) => {
-      const load = mode === 'equal' ? P / cls.length : P * SOP[c] / sum;
-      const rel = load / SOP[c];                 // 1 = tepat di batas SOP
+      const rel = LOAD[mode][c] / SOP[c];        // 1 = tepat di batas SOP
       i.style.height = (rel * 80) + '%';          // garis batas di 80% tinggi
-      m.classList.toggle('over', rel > 1);
+      m.classList.toggle('over', mode === 'equal' && c === 'B');
     });
     if (mode === 'equal') {
       note.className = 'split-note bad';
-      note.innerHTML = `Tiap modul menerima <b>${fmt(P / cls.length)} kW</b>. Batas kelas B hanya <b>${fmt(SOP.B)} kW</b>, jadi modul B trip lebih dulu, bebannya pindah ke modul lain, dan bank bisa lepas seluruhnya.`;
+      note.innerHTML = `Tiap modul menerima <b>${fmt(LOAD.equal.A)} kW</b>. Di kelas B itu setara arus <b>30,95 A</b>, melewati batas <b>25 A</b>, jadi modul B trip lebih dulu, bebannya pindah ke modul lain, dan bank bisa lepas seluruhnya.`;
     } else {
       note.className = 'split-note good';
-      note.innerHTML = `Kelas A menerima <b>${fmt(P * SOP.A / sum)} kW</b> dan kelas B <b>${fmt(P * SOP.B / sum)} kW</b>. Semua modul memikul bagian yang sama terhadap batasnya sendiri, tidak ada yang tiba di batas lebih dulu.`;
+      note.innerHTML = `Kelas A menerima <b>${fmt(LOAD.sop.A)} kW</b> (34,1 A) dan kelas B <b>${fmt(LOAD.sop.B)} kW</b> (21,3 A). Semua modul ≤ 85,6% SOP, tidak ada yang tiba di batas lebih dulu.`;
     }
   }
   $$('.seg [data-mode]').forEach((b) => b.addEventListener('click', () => {

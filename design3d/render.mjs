@@ -11,14 +11,15 @@ const srv = createServer(async (req, res) => {
 }).listen(8765);
 const browser = await chromium.launch({ args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'] });
 const views = process.argv.slice(2).length ? process.argv.slice(2) : ['hero', 'front', 'drawer'];
+const W = +(process.env.W || 2400), H = +(process.env.H || 1500), OUT = process.env.OUT || 'out';
 for (const v of views) {
-  const page = await browser.newPage({ viewport: { width: 2400, height: 1500 } });
+  const page = await browser.newPage({ viewport: { width: W, height: H } });
   page.on('console', m => console.log(v, m.text())); page.on('pageerror', e => console.log(v, 'ERR', e.message));
-  await page.goto(`http://localhost:8765/render.html?view=${v}`);
-  await page.waitForFunction(() => window.__done === true, null, { timeout: 180000 });
-  await page.locator('canvas').screenshot({ path: `out/${v}.png`, omitBackground: true });
+  await page.goto(`http://localhost:8765/render.html?view=${v}&w=${W}&h=${H}`);
+  await page.waitForFunction(() => window.__done === true, null, { timeout: 600000 });
+  await page.locator('canvas').screenshot({ path: `${OUT}/${v}.png`, omitBackground: true });
   const anchors = await page.evaluate(() => window.__anchors);
-  (await import('fs')).writeFileSync(`out/${v}.anchors.json`, JSON.stringify(anchors, null, 1));
+  (await import('fs')).writeFileSync(`${OUT}/${v}.anchors.json`, JSON.stringify(anchors, null, 1));
   console.log('rendered', v);
   await page.close();
 }

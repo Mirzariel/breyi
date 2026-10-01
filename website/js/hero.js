@@ -26,15 +26,15 @@ export async function initHero() {
   controls.enableZoom = false;           // zoom lewat tombol, supaya gulir halaman tidak tersandera
   controls.minPolarAngle = 0.75;
   controls.maxPolarAngle = 1.5;
-  controls.minAzimuthAngle = -0.35;
-  controls.maxAzimuthAngle = 1.35;
+  controls.minAzimuthAngle = -0.3;
+  controls.maxAzimuthAngle = 1.2;
   controls.autoRotate = !reduced;
   controls.autoRotateSpeed = 0.8;
   renderer.domElement.style.touchAction = 'pan-y';
   renderer.domElement.setAttribute('aria-hidden', 'true');
 
   let zoomK = 1, userZoom = false;
-  const fitDist = (aspect) => Math.max(9.6, 8.4 / (2 * Math.tan(THREE.MathUtils.degToRad(15)) * Math.min(aspect, 2.3)));
+  const fitDist = (aspect) => Math.max(9.6, 7.6 / (2 * Math.tan(THREE.MathUtils.degToRad(15)) * Math.min(aspect, 2.3)));
   const setDist = (d) => {
     const v = camera.position.clone().sub(controls.target);
     v.setLength(THREE.MathUtils.clamp(d, 5, 20));
@@ -85,7 +85,7 @@ export async function initHero() {
   S.setTick(() => {
     if (controls.autoRotate) {                     // bolak-balik, tidak berputar penuh
       const a = controls.getAzimuthalAngle();
-      if (a > 1.1) dec = true; else if (a < 0.05) dec = false;
+      if (a > 1.0) dec = true; else if (a < 0.1) dec = false;
       controls.autoRotateSpeed = dec ? 0.8 : -0.8;
     }
     controls.update();

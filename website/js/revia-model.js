@@ -1,4 +1,4 @@
-// ReVIA — model 3D unit bank baterai EV second-life untuk virtual inertia.
+// Model 3D unit bank baterai EV second-life untuk virtual inertia.
 // Satuan meter, sumbu y ke atas. Dipakai bersama oleh render statis dan website.
 //
 //   import * as THREE from 'three';
@@ -99,9 +99,9 @@ function drawerParts(K, idx, cls) {
     c.fillText(cls === 'A' ? 'SOH 80%   R10s 0,08 Ω' : 'SOH 70%   R10s 0,16 Ω', w * 0.05, h * 0.62);
     c.fillText(`SOP 10 s: ${cls === 'A' ? '5,07' : '3,15'} kW`, w * 0.05, h * 0.82);
   });
-  lab.rotation.x = -Math.PI / 2; at(lab, 0.0, 0.151, 0.06); mod.add(lab);
+  lab.rotation.x = -Math.PI / 2; at(lab, 0.0, 0.151, -0.11); mod.add(lab);
   for (const sx of [-0.12, 0.12]) {
-    mod.add(at(cyl(0.018, 0.03, sx < 0 ? mats.hv : mats.ink), sx, 0.165, -0.2));
+    mod.add(at(cyl(0.018, 0.03, sx < 0 ? mats.hv : mats.ink), sx * 1.45, 0.165, -0.235));
   }
   parts.module = mod;
   // BMS
@@ -232,7 +232,7 @@ function batteryCabinet(K, n, { open = 0, drawerOut = 0 } = {}) {
 function hmiScreen(K) {
   return K.label(0.3, 0.19, 640, (c, w, h) => {
     c.fillStyle = '#0d1418'; c.fillRect(0, 0, w, h);
-    c.fillStyle = '#19c2b2'; c.font = `700 ${h * 0.085}px ${FONT}`; c.fillText('ReVIA · VIRTUAL INERTIA', w * 0.05, h * 0.13);
+    c.fillStyle = '#19c2b2'; c.font = `700 ${h * 0.085}px ${FONT}`; c.fillText('VIRTUAL INERTIA · SOP', w * 0.05, h * 0.13);
     c.strokeStyle = 'rgba(255,255,255,0.12)'; c.lineWidth = 1;
     for (let i = 1; i < 4; i++) { c.beginPath(); c.moveTo(w * 0.05, h * (0.2 + i * 0.12)); c.lineTo(w * 0.62, h * (0.2 + i * 0.12)); c.stroke(); }
     c.strokeStyle = '#19c2b2'; c.lineWidth = 3; c.beginPath();
@@ -263,8 +263,8 @@ function pcsCabinet(K) {
   at(dp, -w / 2 + 0.005, 0.1 + h / 2, d / 2 + 0.017);
   g.add(dp);
   const logo = label(0.5, 0.12, 512, (c, ww, hh) => {
-    c.fillStyle = PALETTE.ink; c.font = `800 ${hh * 0.78}px ${FONT}`; c.fillText('Re', 0, hh * 0.8);
-    const x = c.measureText('Re').width; c.fillStyle = PALETTE.teal; c.fillText('VIA', x, hh * 0.8);
+    c.fillStyle = PALETTE.ink; c.font = `800 ${hh * 0.62}px ${FONT}`; c.fillText('PCS', 0, hh * 0.75);
+    const x = c.measureText('PCS ').width; c.fillStyle = PALETTE.teal; c.fillText('VI', x, hh * 0.75);
   });
   at(logo, -0.1, 0.1 + h - 0.42, d / 2 + 0.034); g.add(logo);
   const sub = label(0.5, 0.05, 512, (c, ww, hh) => {
@@ -308,10 +308,9 @@ function canopy(K, len, depth) {
   roof.add(at(box(len + 0.3, 0.06, depth + 0.3, mats.body, 0.01), 0, 0, 0));
   roof.add(at(box(len + 0.32, 0.14, 0.02, mats.body), 0, -0.04, (depth + 0.3) / 2));
   const fascia = label(1.6, 0.11, 1024, (c, w, h) => {
-    c.fillStyle = PALETTE.ink; c.font = `800 ${h * 0.75}px ${FONT}`; c.fillText('Re', 0, h * 0.8);
-    const x = c.measureText('Re').width; c.fillStyle = PALETTE.teal; c.fillText('VIA', x, h * 0.8);
-    const x2 = x + c.measureText('VIA').width + 20;
-    c.fillStyle = '#5b666c'; c.font = `600 ${h * 0.45}px ${FONT}`; c.fillText('second-life virtual inertia · 100 kW / 10 s', x2, h * 0.72);
+    c.fillStyle = PALETTE.teal; c.font = `700 ${h * 0.5}px ${FONT}`; c.fillText('SECOND-LIFE', 0, h * 0.72);
+    const x2 = c.measureText('SECOND-LIFE').width + 18;
+    c.fillStyle = '#5b666c'; c.font = `600 ${h * 0.45}px ${FONT}`; c.fillText('virtual inertia · 100 kW / 10 s', x2, h * 0.72);
   });
   at(fascia, -len / 2 + 0.95, -0.04, (depth + 0.3) / 2 + 0.012); roof.add(fascia);
   roof.rotation.x = -0.03;

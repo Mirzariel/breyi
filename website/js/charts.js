@@ -38,7 +38,7 @@ function playDraw(path, ms = 1500, delay = 0) {
 const idx = (d, t) => Math.round((t - d.t[0]) / d.dt);
 
 /* ------------------------------------------------------------------ */
-/* Grafik 1: frekuensi, tanpa VI vs ReVIA                              */
+/* Grafik 1: frekuensi, tanpa VI vs adaptif SOP                              */
 /* ------------------------------------------------------------------ */
 function problemChart(host, d, readout) {
   const A = d.cases['Tanpa VI'], R = d.cases['ReVIA (adaptif SOP)'];
@@ -94,7 +94,7 @@ function problemChart(host, d, readout) {
     s('text', { x: ax, y: ay + 36, class: 'lbl-s', 'text-anchor': 'middle' }, gN, 'nadir ' + fmt(nA.nadir_Hz) + ' Hz');
     const rx = X(0.72), ry = Y(49.972);
     s('line', { x1: X(nR.t_nadir_s) + 3, y1: Y(nR.nadir_Hz) - 5, x2: rx - 6, y2: ry + 17, stroke: C.teal, 'stroke-width': 1 }, gN);
-    s('text', { x: rx, y: ry, class: 'lbl', style: `fill:${C.teal}` }, gN, 'ReVIA');
+    s('text', { x: rx, y: ry, class: 'lbl', style: `fill:${C.teal}` }, gN, 'Adaptif SOP');
     s('text', { x: rx, y: ry + 14, class: 'lbl-s' }, gN, 'nadir ' + fmt(nR.nadir_Hz) + ' Hz');
     host._nadirs = gN;
 
@@ -139,8 +139,8 @@ const CASES = [
   { k: 'Tanpa VI', label: 'Tanpa VI', color: 'ink' },
   { k: 'Rata tanpa SOP', label: 'Bagi rata tanpa SOP', color: 'amber' },
   { k: 'Rata konservatif', label: 'Bagi rata konservatif', color: 'ink' },
-  { k: 'Rata + clip', label: 'Bagi rata + clip', color: 'ink' },
-  { k: 'ReVIA (adaptif SOP)', label: 'ReVIA', color: 'teal' },
+  { k: 'Rata + clip', label: 'Bagi rata + pembatas', color: 'ink' },
+  { k: 'ReVIA (adaptif SOP)', label: 'Adaptif SOP (usulan)', color: 'teal' },
 ];
 
 function casesChart(host, d, chipsEl, metricsEl) {
@@ -268,8 +268,8 @@ function casesChart(host, d, chipsEl, metricsEl) {
     const fail = state.k === 'Rata tanpa SOP';
     const card = (k, v, u, dtxt, cls = '') => `<div class="metric"><span class="k mono">${k}</span><div class="v">${v}<small>${u}</small></div><div class="d ${cls}">${dtxt}</div></div>`;
     metricsEl.innerHTML =
-      card('Nadir', fmt(mt.nadir_Hz), 'Hz', isRef ? 'acuan, tanpa VI' : `deviasi nadir −${devPct(mt)}% dari tanpa VI`, isRef ? '' : 'good') +
-      card('RoCoF 500 ms', fmt(mt.rocof_500ms), 'Hz/s', isRef ? 'acuan, tanpa VI' : `−${rocPct(mt)}% dari tanpa VI`, isRef ? '' : 'good') +
+      card('Nadir', fmt(mt.nadir_Hz), 'Hz', isRef ? 'acuan, tanpa VI' : `deviasi nadir −${devPct(mt)}% dari tanpa VI`, isRef || fail ? '' : 'good') +
+      card('RoCoF 500 ms', fmt(mt.rocof_500ms), 'Hz/s', isRef ? 'acuan, tanpa VI' : `−${rocPct(mt)}% dari tanpa VI`, isRef || fail ? '' : 'good') +
       card('Daya puncak', fmt(mt.P_puncak_kW, 1), 'kW', isRef ? 'tidak ada injeksi' : fail ? 'modul trip pada 0,21 s dan 0,26 s, daya hilang' : state.k === 'ReVIA (adaptif SOP)' ? 'semua modul ≤ 85,6% SOP' : 'dibatasi agar modul aman', fail ? 'bad' : '') +
       card('Energi per kejadian', fmt(mt.E_kWh, 3), 'kWh', 'dari bank sekitar 85,7 kWh');
   }

@@ -99,9 +99,9 @@ function drawerParts(K, idx, cls) {
     c.fillText(cls === 'A' ? 'SOH 80%   R10s 0,08 Ω' : 'SOH 70%   R10s 0,16 Ω', w * 0.05, h * 0.62);
     c.fillText(`SOP 10 s: ${cls === 'A' ? '5,07' : '3,15'} kW`, w * 0.05, h * 0.82);
   });
-  lab.rotation.x = -Math.PI / 2; at(lab, 0.0, 0.151, 0.06); mod.add(lab);
+  lab.rotation.x = -Math.PI / 2; at(lab, 0.0, 0.151, -0.11); mod.add(lab);
   for (const sx of [-0.12, 0.12]) {
-    mod.add(at(cyl(0.018, 0.03, sx < 0 ? mats.hv : mats.ink), sx, 0.165, -0.2));
+    mod.add(at(cyl(0.018, 0.03, sx < 0 ? mats.hv : mats.ink), sx * 1.45, 0.165, -0.235));
   }
   parts.module = mod;
   // BMS
