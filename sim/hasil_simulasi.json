@@ -1,0 +1,167 @@
+{
+ "hasil": {
+  "150 kW": {
+   "Tanpa VI": {
+    "nadir_Hz": 49.758,
+    "t_nadir_s": 0.51,
+    "rocof_500ms": -0.482,
+    "P_puncak_kW": 0.0,
+    "E_kWh": 0.0,
+    "f_min_setelah_serah_terima": 49.92
+   },
+   "VI rata konservatif": {
+    "nadir_Hz": 49.85,
+    "t_nadir_s": 0.45,
+    "rocof_500ms": -0.297,
+    "P_puncak_kW": 72.7,
+    "E_kWh": 0.0952,
+    "f_min_setelah_serah_terima": 49.922
+   },
+   "VI rata + clip lokal": {
+    "nadir_Hz": 49.851,
+    "t_nadir_s": 0.49,
+    "rocof_500ms": -0.295,
+    "P_puncak_kW": 84.1,
+    "E_kWh": 0.0961,
+    "f_min_setelah_serah_terima": 49.919
+   },
+   "VI adaptif SOP": {
+    "nadir_Hz": 49.851,
+    "t_nadir_s": 0.49,
+    "rocof_500ms": -0.295,
+    "P_puncak_kW": 84.1,
+    "E_kWh": 0.0963,
+    "f_min_setelah_serah_terima": 49.918
+   }
+  },
+  "250 kW": {
+   "Tanpa VI": {
+    "nadir_Hz": 49.597,
+    "t_nadir_s": 0.51,
+    "rocof_500ms": -0.803,
+    "P_puncak_kW": 0.0,
+    "E_kWh": 0.0,
+    "f_min_setelah_serah_terima": 49.867
+   },
+   "VI rata konservatif": {
+    "nadir_Hz": 49.702,
+    "t_nadir_s": 0.44,
+    "rocof_500ms": -0.587,
+    "P_puncak_kW": 72.7,
+    "E_kWh": 0.1501,
+    "f_min_setelah_serah_terima": 49.875
+   },
+   "VI rata + clip lokal": {
+    "nadir_Hz": 49.726,
+    "t_nadir_s": 0.42,
+    "rocof_500ms": -0.532,
+    "P_puncak_kW": 92.2,
+    "E_kWh": 0.1551,
+    "f_min_setelah_serah_terima": 49.874
+   },
+   "VI adaptif SOP": {
+    "nadir_Hz": 49.734,
+    "t_nadir_s": 0.4,
+    "rocof_500ms": -0.512,
+    "P_puncak_kW": 100.0,
+    "E_kWh": 0.1564,
+    "f_min_setelah_serah_terima": 49.873
+   }
+  }
+ },
+ "sensitivitas_H": {
+  "H=1.0": {
+   "Tanpa VI": {
+    "nadir_Hz": 49.525,
+    "t_nadir_s": 0.39,
+    "rocof_500ms": -0.888,
+    "P_puncak_kW": 0.0,
+    "E_kWh": 0.0,
+    "f_min_setelah_serah_terima": 49.868
+   },
+   "VI rata + clip lokal": {
+    "nadir_Hz": 49.666,
+    "t_nadir_s": 0.31,
+    "rocof_500ms": -0.54,
+    "P_puncak_kW": 92.2,
+    "E_kWh": 0.1525,
+    "f_min_setelah_serah_terima": 49.874
+   },
+   "VI adaptif SOP": {
+    "nadir_Hz": 49.675,
+    "t_nadir_s": 0.3,
+    "rocof_500ms": -0.515,
+    "P_puncak_kW": 100.0,
+    "E_kWh": 0.1539,
+    "f_min_setelah_serah_terima": 49.874
+   }
+  },
+  "H=1.5": {
+   "Tanpa VI": {
+    "nadir_Hz": 49.597,
+    "t_nadir_s": 0.51,
+    "rocof_500ms": -0.803,
+    "P_puncak_kW": 0.0,
+    "E_kWh": 0.0,
+    "f_min_setelah_serah_terima": 49.867
+   },
+   "VI rata + clip lokal": {
+    "nadir_Hz": 49.726,
+    "t_nadir_s": 0.42,
+    "rocof_500ms": -0.532,
+    "P_puncak_kW": 92.2,
+    "E_kWh": 0.1551,
+    "f_min_setelah_serah_terima": 49.874
+   },
+   "VI adaptif SOP": {
+    "nadir_Hz": 49.734,
+    "t_nadir_s": 0.4,
+    "rocof_500ms": -0.512,
+    "P_puncak_kW": 100.0,
+    "E_kWh": 0.1564,
+    "f_min_setelah_serah_terima": 49.873
+   }
+  },
+  "H=2.0": {
+   "Tanpa VI": {
+    "nadir_Hz": 49.641,
+    "t_nadir_s": 0.61,
+    "rocof_500ms": -0.695,
+    "P_puncak_kW": 0.0,
+    "E_kWh": 0.0,
+    "f_min_setelah_serah_terima": 49.867
+   },
+   "VI rata + clip lokal": {
+    "nadir_Hz": 49.759,
+    "t_nadir_s": 0.52,
+    "rocof_500ms": -0.48,
+    "P_puncak_kW": 92.2,
+    "E_kWh": 0.1566,
+    "f_min_setelah_serah_terima": 49.873
+   },
+   "VI adaptif SOP": {
+    "nadir_Hz": 49.761,
+    "t_nadir_s": 0.54,
+    "rocof_500ms": -0.474,
+    "P_puncak_kW": 100.0,
+    "E_kWh": 0.1575,
+    "f_min_setelah_serah_terima": 49.872
+   }
+  }
+ },
+ "param": {
+  "f0": 50.0,
+  "S_sync": 3.0,
+  "H": 1.5,
+  "P_load": 2.5,
+  "D_pu": 1.0,
+  "R_gov": 0.05,
+  "T_gov": 0.5,
+  "Ki_sec": 0.05,
+  "Kv": 0.08,
+  "Kd": 0.3,
+  "T_f": 0.05,
+  "delay": 0.1,
+  "T_inv": 0.02
+ }
+}
