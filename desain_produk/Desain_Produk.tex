@@ -1,5 +1,5 @@
-% Kompilasi desain produk ReVIA untuk field "Foto/Desain Produk" BREYI 2026.
-% Kompilasi: xelatex Desain_Produk_ReVIA.tex
+% Kompilasi desain produk untuk field "Foto/Desain Produk" BREYI 2026.
+% Kompilasi: xelatex Desain_Produk.tex
 \documentclass[11pt]{article}
 \usepackage[a4paper,landscape,left=1.5cm,right=1.5cm,top=2.5cm,bottom=1.8cm]{geometry}
 \usepackage{fontspec}
@@ -45,8 +45,8 @@
 \header{Tampilan utama}{1}
 \vspace*{0.2cm}
 \begin{minipage}[t]{0.30\linewidth}
-{\fontsize{54}{54}\selectfont\bfseries \brand}\\[8pt]
-{\large\textit{Repurposed-battery Virtual Inertia, Adaptive}}\\[14pt]
+{\fontsize{30}{33}\selectfont\bfseries \textcolor{ink}{Unit}\\ \textcolor{teal}{\textit{Virtual Inertia}}\\ \textcolor{ink}{Baterai EV Bekas}}\\[10pt]
+{\large\textit{Second-life} · adaptif SOP · 100 kW / 10 s}\\[14pt]
 {\normalsize Unit \textit{virtual inertia} dari 28 modul baterai mobil listrik bekas untuk menahan jatuhnya frekuensi di microgrid PLTS Nusa Penida.}\\[14pt]
 {\normalsize\color{mute} Setiap modul diuji, diberi SOP \textit{passport}, lalu dipasang di laci dengan BMS dan konverter DC/DC sendiri. Pengendali membagi daya sesuai kemampuan nyata tiap modul.}
 \end{minipage}\hfill
@@ -55,7 +55,7 @@
 \begin{tikzpicture}
 \node[anchor=south west,inner sep=0] (img) at (0,0) {\includegraphics[width=\linewidth]{../figures/render_hero.png}};
 \begin{scope}[x={(img.south east)},y={(img.north west)}]
-\lead{0.1858}{0.6327}{0.02}{0.52}{east}{Laci modul\\ditarik dari depan}
+\lead{0.1858}{0.6327}{0.06}{0.40}{north west}{Laci modul\\ditarik dari depan}
 \lead{0.3609}{0.492}{0.30}{0.10}{north}{4 kabinet baterai, 7 laci per kabinet}
 \lead{0.5401}{0.6816}{0.60}{0.98}{south}{Kabinet PCS: inverter 125 kVA\\dan pengendali VI}
 \lead{0.7065}{0.4453}{0.78}{0.12}{north}{Trafo 0,4/20 kV}
@@ -195,7 +195,7 @@ Tinggi atap peneduh & $\approx$ 3,0 m \\
 \draw[pw] (inv) -- (tr); \draw[pw] (tr) -- (mg);
 \node[draw=teal, fill=tealsoft, line width=0.5pt, rounded corners=2pt, align=center, inner sep=5pt,
       minimum height=1.1cm, minimum width=9cm, anchor=north] (ctl) at ($(dc.south)!0.5!(inv.south)+(0,-1.3)$)
-  {\textbf{Pengendali ReVIA}\\[1pt] $P_{\mathrm{cmd}}=-\lambda K_v\,\widehat{df/dt}-\lambda K_d\,\Delta f,\quad p_i\propto SOP_i$};
+  {\textbf{Pengendali VI adaptif}\\[1pt] $P_{\mathrm{cmd}}=-\lambda K_v\,\widehat{df/dt}-\lambda K_d\,\Delta f,\quad p_i\propto SOP_i$};
 \coordinate (s1) at ($(dc.south)+(-0.5,0)$); \coordinate (s2) at ($(dc.south)+(0.5,0)$);
 \draw[sg] (s1) -- node[lbl, left] {$SOP_i$} (s1 |- ctl.north);
 \draw[sg] (s2 |- ctl.north) -- node[lbl, right] {$p_i^{*}$} (s2);

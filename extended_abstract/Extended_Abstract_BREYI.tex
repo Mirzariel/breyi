@@ -1,57 +1,96 @@
-% BREYI 2026 - Extended Abstract, gaya IEEE (IEEEtran conference).
-% Format guidebook tetap dipenuhi: A4, margin atas/bawah 4 cm, kiri/kanan 2 cm,
-% Times New Roman 12 pt, spasi tunggal, naskah utama maksimal 5 halaman.
+% BREYI 2026 - Extended Abstract, mengikuti template panitia dan guidebook.
+% A4; margin atas 4 cm, bawah 4 cm, kiri 2 cm, kanan 2 cm; Times New Roman 12 pt;
+% spasi tunggal (13,8 pt, setara "single" di MS Word) tanpa spasi sebelum/sesudah paragraf;
+% dua kolom, rata kanan-kiri; heading rata kiri; keterangan gambar/tabel 10 pt; referensi APA.
+% Naskah utama maksimal 5 halaman (belum termasuk daftar pustaka dan lampiran).
 % Kompilasi: xelatex Extended_Abstract_BREYI.tex (2x).
-\documentclass[conference,12pt,a4paper]{IEEEtran}
-\usepackage[a4paper,top=4cm,bottom=4cm,left=2cm,right=2cm,columnsep=0.6cm]{geometry}
+\documentclass[12pt,a4paper,twocolumn]{article}
+\usepackage[a4paper,top=4cm,bottom=4cm,left=2cm,right=2cm,columnsep=0.95cm]{geometry}
 \usepackage{fontspec}
-\setmainfont{Times New Roman}[SmallCapsFont={TeX Gyre Termes},SmallCapsFeatures={Letters=SmallCaps}]
+\setmainfont{Times New Roman}
 \usepackage{amsmath}
 \usepackage{unicode-math}
 \setmathfont{TeX Gyre Termes Math}
 \setmathfont[range={up/{latin,Latin,num}}]{Times New Roman}
 \setmathfont[range={it/{latin,Latin}}]{Times New Roman Italic}
-\usepackage{graphicx,booktabs,array,tikz,xcolor}
-\usetikzlibrary{arrows.meta,positioning,calc,fit}
+\usepackage{graphicx,array,tikz,xcolor}
+\usetikzlibrary{arrows.meta,positioning,calc}
+\usepackage{caption}
+\usepackage{titlesec}
+\usepackage{enumitem}
 \usepackage[hidelinks]{hyperref}
 \usepackage{xurl}
 \urlstyle{same}
+
+% --- spasi tunggal setara MS Word untuk TNR 12 pt, tanpa spasi antarparagraf ---
+\renewcommand{\normalsize}{\fontsize{12}{13.8}\selectfont}
+\normalsize
+\setlength{\parindent}{1cm}
+\setlength{\parskip}{0pt}
+\pagestyle{empty}
+\setlength{\emergencystretch}{1.5em}
+
+% --- heading: tebal, rata kiri, 12 pt; baris kosong sebelum heading utama ---
+\titleformat{\section}{\normalfont\normalsize\bfseries}{}{0pt}{}
+\titlespacing*{\section}{0pt}{13.8pt}{0pt}
+\titleformat{\subsection}{\normalfont\normalsize\bfseries}{}{0pt}{}
+\titlespacing*{\subsection}{0pt}{0pt}{0pt}
+
+% --- gambar/tabel: di tengah, keterangan 10 pt di bawah, jarak 12 pt dari teks ---
+\DeclareCaptionLabelSeparator{strip}{ - }
+\captionsetup{font={footnotesize},labelfont={},justification=centering,skip=4pt}
+\captionsetup[figure]{name=Gambar,labelsep=strip}
+\captionsetup[table]{name=Tabel,labelsep=period,position=bottom}
+\setlength{\intextsep}{12pt}
+\setlength{\textfloatsep}{12pt}
+\setlength{\floatsep}{12pt}
+\setlength{\dbltextfloatsep}{12pt}
+\setlength{\dblfloatsep}{12pt}
+\renewcommand{\arraystretch}{1.12}
 
 \definecolor{ink}{HTML}{262C31}
 \definecolor{teal}{HTML}{0F8F84}
 \definecolor{tealsoft}{HTML}{E4F2F0}
 \definecolor{soft}{HTML}{F2F4F3}
-
-\renewcommand{\figurename}{Gbr.}
-\renewcommand{\tablename}{TABEL}
-\renewcommand{\abstractname}{Abstrak}
-\renewcommand{\IEEEkeywordsname}{Kata kunci}
-\renewcommand{\refname}{DAFTAR PUSTAKA}
 \newcommand{\eng}[1]{\textit{#1}}
-\newcommand{\callout}[3]{\node[circle,fill=teal,text=white,inner sep=0pt,minimum size=12pt,font=\scriptsize\bfseries] at (#1,#2) {#3};}
+\newcommand{\callout}[3]{\node[circle,fill=teal,text=white,inner sep=0pt,minimum size=11pt,font=\scriptsize\bfseries] at (#1,#2) {#3};}
 
 \begin{document}
-\title{Repurposing Second Life EV Batteries for Adaptive Virtual Inertia in Bali's Solar PV Microgrid to Enhance Frequency Stability and Support Renewable Energy Integration}
+\twocolumn[{%
+\begin{center}
+{\fontsize{14}{16.1}\selectfont\bfseries\itshape Repurposing Second Life EV Batteries for Adaptive Virtual Inertia in Bali's Solar PV Microgrid to Enhance Frequency Stability and Support Renewable Energy Integration\par}
+\vspace{4pt}
+{\itshape Bali Youth Renewable Energy Innovation Fair}~2026\par
+Mirzariel Akmal Norman, Bagus Aldiguna, Irma Nur Cahyani\par
+{\fontsize{10}{11.5}\selectfont\itshape Universitas Gadjah Mada\par
+mirzariel@gmail.com\par}
+{\fontsize{10}{11.5}\selectfont Kategori: Inovasi Teknologi \& Prototipe Fisik -- Sistem Penyimpanan \& Manajemen Energi\par}
+\end{center}
+\vspace{13.8pt}
+}]
 
-\author{\IEEEauthorblockN{Mirzariel Akmal Norman, Bagus Aldiguna, Irma Nur Cahyani}
-\IEEEauthorblockA{Universitas Gadjah Mada, Yogyakarta, Indonesia\\
-Korespondensi: mirzariel@gmail.com}}
+\section{Pendahuluan}
+\subsection{a. Latar Belakang}
+Pemerintah Provinsi Bali menargetkan Nusa Penida beroperasi dengan 100\% energi terbarukan pada 2030 sebagai bagian dari Bali \eng{Net Zero Emission} 2045 (Dinas Ketenagakerjaan dan ESDM Provinsi Bali, 2026; BRIDA Provinsi Bali, 2025). Sistem kelistrikan pulau ini tercatat sebagai sistem terisolasi (Direktorat Jenderal Ketenagalistrikan, t.t.). Sejak November 2025, PLN mengoperasikan \eng{smart microgrid} yang menggabungkan PLTS Suana 3,5~MWp, BESS 1,8~MWh, dan PLTD (PT PLN (Persero), 2025).
 
-\maketitle
+Pada sistem pulau, energi kinetik rotor generator menjadi penahan pertama perubahan frekuensi. Saat terjadi gangguan daya $\Delta P$, laju perubahan frekuensi awal sebanding dengan $\Delta P/(2HS)$, dengan $H$ konstanta inersia dan $S$ kapasitas generator yang beroperasi (Kundur, 1994). PLTS terhubung melalui inverter dan tidak menyumbang inersia. Jika porsi PLTS naik dan unit diesel yang beroperasi berkurang, nilai $HS$ mengecil. Frekuensi turun lebih cepat dan lebih dalam, pelepasan beban lebih mudah terpicu, dan penambahan PLTS akhirnya dibatasi oleh stabilitas sistem.
 
-\begin{abstract}
-Nusa Penida ditargetkan beroperasi dengan 100\% energi terbarukan pada 2030. Ketika porsi PLTS bertambah, jumlah generator diesel yang beroperasi berkurang sehingga inersia sistem turun dan frekuensi jatuh lebih cepat saat terjadi gangguan. Penelitian ini merancang ReVIA, unit \eng{virtual inertia} yang memakai 28 modul baterai kendaraan listrik (EV) bekas. Setiap modul diuji untuk memperoleh \eng{State of Power} (SOP) 10 detik, ditempatkan dalam laci dengan BMS dan konverter DC/DC sendiri, lalu mendapat porsi daya sebanding dengan SOP-nya. Gain inersia ikut diturunkan bila SOP total berkurang. Pada titik desain, ReVIA memberikan 100~kW selama 10~s dengan seluruh modul di bawah 86\% SOP. Pada perangkat yang sama, pembagian daya rata hanya aman sampai 72,7~kW, sedangkan pembagian rata tanpa pembatas memicu trip berantai dalam 0,26~s. Simulasi sistem diesel representatif dengan gangguan 250~kW menunjukkan deviasi nadir frekuensi turun 34\% dan RoCoF turun 36\%, dengan energi hanya 0,156~kWh per kejadian. Estimasi biaya unit adalah Rp509 juta.
-\end{abstract}
+\eng{Virtual inertia} (VI) mengatasi masalah ini dengan membuat inverter baterai menyuntikkan daya sebanding laju perubahan frekuensi (RoCoF) selama beberapa detik (Tamrakar dkk., 2017). Layanan ini membutuhkan daya besar dengan energi kecil. Profil tersebut cocok untuk baterai kendaraan listrik (EV) bekas. Kapasitasnya sudah turun ke 70--80\% sehingga kurang layak untuk kendaraan, tetapi modulnya masih sanggup memberi daya pulsa (Hassan dkk., 2023; White dkk., 2020).
 
-\begin{IEEEkeywords}
-baterai \eng{second-life}, \eng{virtual inertia}, \eng{state of power}, microgrid, Nusa Penida
-\end{IEEEkeywords}
+Masalah utama baterai bekas adalah kondisi modul yang tidak seragam. Dua modul dengan kapasitas mirip dapat memiliki resistansi dan batas arus yang jauh berbeda (Hassan dkk., 2023). Jika daya dibagi rata, modul terlemah mencapai batasnya lebih dulu dan seluruh bank harus diturunkan kemampuannya. Liu dkk. (2018) membagi daya berdasarkan kapasitas dan SOC pada konverter \eng{cascaded H-bridge} (CHB) 5~kW, tetapi untuk kendali daya aktif-reaktif biasa, belum untuk layanan inersia yang bereaksi dalam orde 100~ms.
 
-\begin{figure*}[!t]
+\subsection{b. Tujuan Penelitian}
+Penelitian ini bertujuan merancang unit VI adaptif berbasis 28 modul baterai EV bekas untuk \eng{microgrid} Nusa Penida dan menguji kelayakan daya, energi, respons frekuensi, serta biayanya. Rancangan ini memiliki tiga unsur kebaruan:
+\begin{enumerate}[label=\arabic*),leftmargin=0.75cm,itemsep=0pt,topsep=0pt,parsep=0pt]
+\item SOP \eng{passport} per modul, yaitu hasil uji pulsa yang diringkas menjadi batas daya 10~s dan dicetak sebagai kode QR di laci modul;
+\item laci modular berisi BMS dan DC/DC untuk setiap modul, sehingga setiap modul dipakai sampai batasnya sendiri atau dilepas tanpa mematikan unit;
+\item kendali VI adaptif yang membagi daya sebanding SOP dan menurunkan penguatan inersia saat SOP total berkurang.
+\end{enumerate}
+
+\begin{figure}[t]
 \centering
-\begin{minipage}[c]{0.66\textwidth}
 \begin{tikzpicture}
-\node[anchor=south west,inner sep=0] (img) at (0,0) {\includegraphics[width=\linewidth]{../figures/render_hero.png}};
+\node[anchor=south west,inner sep=0] (img) at (0,0) {\includegraphics[width=\columnwidth]{../figures/render_hero.png}};
 \begin{scope}[x={(img.south east)},y={(img.north west)}]
 \callout{0.19}{0.70}{1}
 \callout{0.37}{0.56}{2}
@@ -60,34 +99,11 @@ baterai \eng{second-life}, \eng{virtual inertia}, \eng{state of power}, microgri
 \callout{0.16}{0.93}{5}
 \end{scope}
 \end{tikzpicture}
-\end{minipage}\hfill
-\begin{minipage}[c]{0.31\textwidth}
-\caption{Rancangan 3D ReVIA. (1)~Laci modul yang ditarik untuk penggantian. (2)~Kabinet baterai BAT-1 sampai BAT-4 berisi 28 modul. (3)~Kabinet PCS berisi inverter 125~kVA, pengendali VI, dan layar HMI. (4)~Trafo 0,4/20~kV. (5)~Atap peneduh di atas pad beton.}
+\caption{Rancangan 3D unit: (1) laci modul, (2) kabinet baterai, (3) kabinet PCS, (4) trafo 0,4/20~kV, (5) atap peneduh}
 \label{fig:render}
-\end{minipage}
-\end{figure*}
+\end{figure}
 
-\section{PENDAHULUAN}
-\subsection{Latar Belakang}
-Pemerintah Provinsi Bali menargetkan Nusa Penida beroperasi dengan 100\% energi terbarukan pada 2030 sebagai bagian dari Bali \eng{Net Zero Emission} 2045 [1], [2]. Sistem kelistrikan pulau ini tercatat sebagai sistem terisolasi [3]. Sejak November 2025, PLN mengoperasikan \eng{smart microgrid} yang menggabungkan PLTS Suana 3,5~MWp, BESS 1,8~MWh, dan PLTD [4].
-
-Pada sistem pulau, energi kinetik rotor generator menjadi penahan pertama perubahan frekuensi. Saat terjadi gangguan daya $\Delta P$, laju perubahan frekuensi awal sebanding dengan $\Delta P/(2HS)$, dengan $H$ konstanta inersia dan $S$ kapasitas generator yang beroperasi [5]. PLTS terhubung melalui inverter dan tidak menyumbang inersia. Jika porsi PLTS naik dan unit diesel yang beroperasi berkurang, nilai $HS$ mengecil. Frekuensi turun lebih cepat dan lebih dalam, pelepasan beban lebih mudah terpicu, dan penambahan PLTS akhirnya dibatasi oleh stabilitas sistem.
-
-\eng{Virtual inertia} (VI) mengatasi masalah ini dengan membuat inverter baterai menyuntikkan daya sebanding laju perubahan frekuensi (RoCoF) selama beberapa detik [6]. Layanan ini membutuhkan daya besar dengan energi kecil. Profil tersebut cocok untuk baterai EV bekas. Kapasitasnya sudah turun ke 70--80\% sehingga kurang layak untuk kendaraan, tetapi modulnya masih sanggup memberi daya pulsa [7], [8].
-
-\subsection{Celah Penelitian dan Kontribusi}
-Masalah utama baterai bekas adalah kondisi modul yang tidak seragam. Dua modul dengan kapasitas mirip dapat memiliki resistansi dan batas arus yang jauh berbeda [7], [8]. Jika daya dibagi rata, modul terlemah mencapai batasnya lebih dulu dan seluruh bank harus diturunkan kemampuannya. Liu dkk. [9] membagi daya berdasarkan kapasitas dan SOC pada konverter \eng{cascaded H-bridge} (CHB) 5~kW, tetapi untuk kendali daya aktif-reaktif biasa, belum untuk layanan inersia yang bereaksi dalam orde 100~ms.
-
-Penelitian ini merancang ReVIA (\eng{Repurposed-battery Virtual Inertia, Adaptive}) untuk microgrid Nusa Penida dengan tiga kontribusi:
-\begin{enumerate}
-\item \textbf{SOP \eng{passport}} per modul. Hasil uji pulsa diringkas menjadi batas daya 10~s yang dicetak sebagai kode QR di laci dan dibaca pengendali.
-\item \textbf{Laci modular} berisi BMS dan DC/DC untuk setiap modul, sehingga setiap modul dipakai sampai batasnya sendiri atau dilepas tanpa mematikan unit.
-\item \textbf{Kendali VI adaptif} yang membagi daya sebanding SOP dan menurunkan gain inersia saat SOP total berkurang.
-\end{enumerate}
-Tujuannya adalah menguji kelayakan daya, energi, respons frekuensi, dan biaya rancangan tersebut.
-
-\section{METODOLOGI}
-\begin{figure*}[!t]
+\begin{figure*}[t]
 \centering
 \begin{tikzpicture}[
   font=\footnotesize, >={Stealth[length=4pt]},
@@ -102,7 +118,7 @@ Tujuannya adalah menguji kelayakan daya, energi, respons frekuensi, dan biaya ra
 \node[font=\scriptsize, text=teal, above] at ($(busx)+(0,0.72)$) {bus DC 750 V};
 \node[blk, right=1.0cm of dc] (inv) {\textbf{Inverter 3 fase}\\{\scriptsize 125 kVA}};
 \node[blk, right=0.5cm of inv] (tr) {\textbf{Trafo}\\{\scriptsize 0,4/20 kV}};
-\node[blk, right=0.5cm of tr, fill=white, dash pattern=on 3pt off 1.5pt] (mg) {\textbf{Microgrid}\\{\scriptsize Nusa Penida}};
+\node[blk, right=0.5cm of tr, fill=white, dash pattern=on 3pt off 1.5pt] (mg) {\textbf{\textit{Microgrid}}\\{\scriptsize Nusa Penida}};
 \draw[pw] (mod) -- (dc);
 \draw[pw] (dc.east) -- (busx);
 \draw[pw] (busx) -- (inv.west);
@@ -111,7 +127,7 @@ Tujuannya adalah menguji kelayakan daya, energi, respons frekuensi, dan biaya ra
 \node[draw=teal, fill=tealsoft, line width=0.5pt, rounded corners=2pt, align=center, inner sep=4pt,
       minimum height=1.0cm, minimum width=7.6cm, anchor=north] (ctl)
   at ($(dc.south)!0.5!(inv.south)+(0,-1.25)$)
-  {\textbf{Pengendali ReVIA}\\[1pt] $P_{\mathrm{cmd}}=-\lambda K_v\,\widehat{df/dt}-\lambda K_d\,\Delta f,\quad p_i\propto SOP_i$};
+  {\textbf{Pengendali VI adaptif}\\[1pt] $P_{\mathrm{cmd}}=-\lambda K_v\,\widehat{df/dt}-\lambda K_d\,\Delta f,\quad p_i\propto SOP_i$};
 \coordinate (s1) at ($(dc.south)+(-0.45,0)$);
 \coordinate (s2) at ($(dc.south)+(0.45,0)$);
 \draw[sg] (s1) -- node[lbl, left] {$SOP_i$} (s1 |- ctl.north);
@@ -119,13 +135,15 @@ Tujuannya adalah menguji kelayakan daya, energi, respons frekuensi, dan biaya ra
 \draw[sg] (inv.south |- ctl.north) -- node[lbl, right] {$P^{*}$} (inv.south);
 \draw[sg] (mg.south) |- node[lbl, pos=0.72, below] {$f$ dan $df/dt$ di titik sambung} (ctl.east);
 \end{tikzpicture}
-\caption{Arsitektur ReVIA. Garis tebal menunjukkan aliran daya dan garis putus-putus menunjukkan sinyal kendali.}
+\caption{Arsitektur sistem yang diusulkan; garis tebal adalah aliran daya dan garis putus-putus adalah sinyal kendali}
 \label{fig:arsitektur}
 \end{figure*}
-\subsection{Lingkup dan Kondisi Acuan}
-Kajian dibatasi pada sistem pulau Nusa Penida. Data dinamis sistem, seperti inersia diesel, setelan governor, dan mode kendali BESS eksisting, belum tersedia untuk publik. Karena itu, parameter sistem pada simulasi dinyatakan sebagai asumsi representatif dan dicantumkan lengkap pada Lampiran~A.
 
-\subsection{Seleksi Modul dan SOP Passport}
+\section{Metodologi Penelitian}
+\subsection{a. Lingkup dan Kondisi Acuan}
+Kajian dibatasi pada sistem pulau Nusa Penida. Data dinamis sistem, seperti inersia diesel, setelan \eng{governor}, dan mode kendali BESS eksisting, belum tersedia untuk publik. Karena itu, parameter sistem pada simulasi dinyatakan sebagai asumsi representatif dan dicantumkan lengkap pada Lampiran~A.
+
+\subsection{b. Seleksi Modul dan SOP Passport}
 Setiap modul melewati tahap dokumentasi dan karantina, inspeksi fisik dan isolasi, uji \eng{self-discharge}, uji kapasitas, identifikasi OCV--SOC dan resistansi, serta uji pulsa dua arah pada beberapa SOC dan suhu. Modul cacat ditolak. Dari uji pulsa diperoleh arus maksimum untuk horizon $\tau=10$~s:
 \begin{equation}
 \begin{aligned}
@@ -138,8 +156,8 @@ SOP_i=\big(U_i-I_i^{\max}R_{i,\tau}\big)\,I_i^{\max}
 \end{equation}
 dengan $U_i$ tegangan rangkaian terbuka dan $R_{i,\tau}$ resistansi efektif 10~s. Nilai SOP, resistansi, dan SOH disimpan dalam SOP \eng{passport}. Selama operasi, BMS mengoreksi SOP terhadap SOC dan suhu.
 
-\subsection{Kendali Virtual Inertia Adaptif}
-Pengendali mengukur frekuensi $f$ dan RoCoF terfilter di titik sambung. Perintah daya injeksi dan pembagiannya adalah
+\subsection{c. Kendali Virtual Inertia Adaptif}
+Pengendali mengukur frekuensi $f$ dan RoCoF terfilter di titik sambung (Gambar~\ref{fig:arsitektur}). Perintah daya injeksi dan pembagiannya adalah
 \begin{equation}
 P_{\mathrm{cmd}}=-\lambda K_v\,\widehat{\tfrac{df}{dt}}-\lambda K_d\,(f-f_0)
 \end{equation}
@@ -149,26 +167,25 @@ p_i=P_{\mathrm{t}}\,\frac{SOP_i}{\sum_j SOP_j},\qquad p_i\le\gamma\,SOP_i
 \begin{equation}
 \lambda=\min\!\Big(1,\ \frac{\eta\,(\gamma\sum_j SOP_j-P_{\mathrm{aux}})}{P_{\mathrm{svc}}}\Big)
 \end{equation}
-dengan $P_{\mathrm{t}}$ daya di terminal baterai, $K_v=2H_vS_b/f_0=80$~kW·s/Hz ($H_v=2$~s, $S_b=1$~MW), $K_d=300$~kW/Hz, cadangan ketidakpastian $\gamma=0{,}9$, efisiensi $\eta=0{,}94$, daya bantu $P_{\mathrm{aux}}=2$~kW, dan daya layanan $P_{\mathrm{svc}}=100$~kW. Jika sebuah modul mencapai batas, sisa perintah dialihkan ke modul yang masih memiliki ruang. Proteksi BMS tetap bekerja lokal tanpa menunggu pengendali pusat. Setelah 10~s, layanan diserahkan ke governor diesel dengan \eng{ramp} 5~s. Inverter beroperasi \eng{grid-following}.
+dengan $P_{\mathrm{t}}$ daya di terminal baterai, $K_v=2H_vS_b/f_0=80$~kW·s/Hz ($H_v=2$~s, $S_b=1$~MW), $K_d=300$~kW/Hz, cadangan ketidakpastian $\gamma=0{,}9$, efisiensi $\eta=0{,}94$, daya bantu $P_{\mathrm{aux}}=2$~kW, dan daya layanan $P_{\mathrm{svc}}=100$~kW. Jika sebuah modul mencapai batas, sisa perintah dialihkan ke modul yang masih memiliki ruang. Proteksi BMS tetap bekerja lokal tanpa menunggu pengendali pusat. Setelah 10~s, layanan diserahkan ke \eng{governor} diesel secara bertahap selama 5~s. Inverter beroperasi \eng{grid-following}.
 
-\subsection{Evaluasi}
-Evaluasi terdiri atas anggaran daya dan energi pada titik desain (OCV 130~V, 25~°C, SOC 50\%) dan simulasi model frekuensi agregat satu area [5] di Python dengan langkah 1~ms. Sistem acuan berupa diesel 3~MVA ($H=1{,}5$~s, droop 5\%), beban 2,5~MW, dan gangguan kehilangan pembangkitan 250~kW. VI dimodelkan dengan filter RoCoF 50~ms dan latensi 100~ms. Semua skema pembagian daya diuji pada perangkat keras yang sama. Pada skema rata tanpa SOP, BMS diasumsikan memutus modul bila arusnya melewati batas lebih dari 50~ms.
+\subsection{d. Evaluasi}
+Evaluasi terdiri atas anggaran daya dan energi pada titik desain (OCV 130~V, 25~°C, SOC 50\%) dan simulasi model frekuensi agregat satu area (Kundur, 1994) di Python dengan langkah 1~ms. Sistem acuan berupa diesel 3~MVA ($H=1{,}5$~s, \eng{droop} 5\%), beban 2,5~MW, dan gangguan kehilangan pembangkitan 250~kW. VI dimodelkan dengan filter RoCoF 50~ms dan latensi 100~ms. Semua skema pembagian daya diuji pada perangkat keras yang sama. Pada skema rata tanpa SOP, BMS diasumsikan memutus modul bila arusnya melewati batas lebih dari 50~ms.
 
-\section{HASIL DAN PEMBAHASAN}
-\begin{figure*}[!t]
+\begin{figure*}[t]
 \centering
 \includegraphics[width=0.92\textwidth]{../figures/fig_alokasi.pdf}
-\caption{(a) Layanan bersih yang aman untuk setiap skema pada perangkat keras yang sama. (b) Arus per modul selama gangguan 250~kW. Pembagian rata tanpa SOP memutus modul B lalu modul A, sedangkan ReVIA menjaga semua modul di bawah batasnya.}
+\caption{(a) Layanan bersih yang aman untuk setiap skema pada perangkat keras yang sama; (b) arus per modul selama gangguan 250~kW}
 \label{fig:alokasi}
 \end{figure*}
-\subsection{Desain Fisik ReVIA}
-ReVIA terdiri atas lima kabinet \eng{outdoor} di atas pad beton (Gbr.~\ref{fig:render}). Empat kabinet baterai masing-masing berisi tujuh laci, sehingga total ada 28 modul NMC/\eng{hard carbon} 36s2p (126~V, 31,5~Ah nominal). Konfigurasi modul mengacu pada sampel EnerDel dalam [8]. Kabinet kelima berisi inverter 125~kVA dan pengendali VI. Trafo 0,4/20~kV menghubungkan unit ke jaringan.
 
-Bentuk kabinet dipilih agar kapasitas dapat ditambah per kabinet dan setiap laci dapat diganti dari depan. Atap peneduh menurunkan beban pendingin di iklim tropis, sedangkan pad beton menjaga peralatan dari genangan di lokasi pesisir. Isi satu laci ditunjukkan pada Gbr.~\ref{fig:laci}. LED panel depan menunjukkan kelas modul, yaitu hijau untuk kelas A dan kuning untuk kelas B. Rancangan mengasumsikan 20 modul kelas A (SOH 80\%, $R_{10\,\mathrm{s}}=0{,}08~\Omega$, batas 40~A) dan 8 modul kelas B (SOH 70\%, 0,16~$\Omega$, 25~A).
+\section{Hasil dan Pembahasan}
+\subsection{a. Desain Fisik Unit}
+Unit yang diusulkan terdiri atas lima kabinet luar ruang di atas pad beton (Gambar~\ref{fig:render}). Empat kabinet baterai masing-masing berisi tujuh laci, sehingga total ada 28 modul NMC/\eng{hard carbon} 36s2p (126~V, 31,5~Ah nominal) yang mengacu pada sampel EnerDel dalam White dkk. (2020). Kabinet kelima berisi inverter 125~kVA dan pengendali VI. Trafo 0,4/20~kV menghubungkan unit ke jaringan.
 
+Bentuk kabinet dipilih agar kapasitas dapat ditambah per kabinet dan setiap laci dapat diganti dari depan. Atap peneduh menurunkan beban pendingin di iklim tropis, sedangkan pad beton menjaga peralatan dari genangan di lokasi pesisir. Isi satu laci ditunjukkan pada Gambar~\ref{fig:laci}. LED panel depan menunjukkan kelas modul, yaitu hijau untuk kelas A dan kuning untuk kelas B. Rancangan mengasumsikan 20 modul kelas A (SOH 80\%, $R_{10\,\mathrm{s}}=0{,}08~\Omega$, batas 40~A) dan 8 modul kelas B (SOH 70\%, 0,16~$\Omega$, 25~A).
 
-
-\begin{figure}[!t]
+\begin{figure}[t]
 \centering
 \begin{tikzpicture}
 \node[anchor=south west,inner sep=0] (img) at (0,0) {\includegraphics[width=0.92\columnwidth]{../figures/render_drawer.png}};
@@ -181,142 +198,182 @@ Bentuk kabinet dipilih agar kapasitas dapat ditambah per kabinet dan setiap laci
 \callout{0.93}{0.45}{6}
 \end{scope}
 \end{tikzpicture}
-\caption{Isi satu laci (\eng{exploded view}): (1) modul EV bekas 126~V, (2) BMS, (3) DC/DC dua arah terisolasi 6~kW, (4) panel depan dengan LED kelas modul, (5) kode QR SOP \eng{passport}, (6) nampan geser.}
+\caption{Isi satu laci: (1) modul EV bekas, (2) BMS, (3) DC/DC dua arah terisolasi 6~kW, (4) panel depan dengan LED kelas modul, (5) kode QR SOP \eng{passport}, (6) nampan geser}
 \label{fig:laci}
 \end{figure}
 
-\subsection{Arsitektur Daya dan Kendali}
-Aliran daya dan sinyal ditunjukkan pada Gbr.~\ref{fig:arsitektur}. Setiap modul memiliki DC/DC sendiri menuju bus DC 750~V. Dibanding CHB [9], cara ini membuat arus setiap modul dapat diatur langsung dan modul bermasalah cukup dilepas dari bus. Konsekuensinya adalah 28 konverter senilai Rp84 juta dan tambahan rugi konversi.
+\subsection{b. Arsitektur Daya dan Kendali}
+Setiap modul memiliki DC/DC sendiri menuju bus DC 750~V (Gambar~\ref{fig:arsitektur}). Dibanding CHB (Liu dkk., 2018), cara ini membuat arus setiap modul dapat diatur langsung dan modul bermasalah cukup dilepas dari bus. Konsekuensinya adalah 28 konverter senilai Rp84 juta dan tambahan rugi konversi.
 
-
-
-\subsection{Anggaran Daya dan Pengaruh Pembagian Daya}
+\subsection{c. Anggaran Daya dan Pengaruh Pembagian Daya}
 SOP 10~s modul kelas A adalah $(130-40\cdot0{,}08)\cdot40=5{,}07$~kW dan kelas B 3,15~kW, sehingga SOP total 126,64~kW. Dengan cadangan 10\%, daya bantu 2~kW, dan efisiensi 94\%, kemampuan injeksi bersih adalah $0{,}94\,(0{,}9\cdot126{,}64-2)=105{,}26$~kW, di atas kebutuhan 100~kW. Energi per kejadian, termasuk rugi internal dan margin 25\%, hanya 0,40~kWh, sedangkan energi efektif bank 85,7~kWh. Jumlah modul ditentukan oleh kebutuhan daya. Karena itu, baterai bekas yang kapasitas energinya sudah turun tetap layak dipakai.
 
-Pengaruh skema pembagian daya ditunjukkan pada Gbr.~\ref{fig:alokasi}. Pembagian rata membebani setiap modul 3,87~kW, yang bagi modul kelas B berarti arus 30,95~A, di atas batas 25~A. Dalam simulasi, modul B trip pada 0,21~s, bebannya pindah ke modul A, dan modul A ikut trip pada 0,26~s. Seluruh bank lepas di awal kejadian. Pembagian rata yang dibatasi pada kemampuan modul terlemah memang aman, tetapi hanya menghasilkan 72,7~kW. Pembatas lokal tanpa redistribusi menghasilkan 92,2~kW. ReVIA membebani modul A 4,34~kW (34,1~A) dan modul B 2,70~kW (21,3~A), sehingga layanan 100~kW tercapai. Kapasitas ini 37\% lebih besar daripada pembagian rata konservatif.
+Pengaruh skema pembagian daya ditunjukkan pada Gambar~\ref{fig:alokasi}. Pembagian rata membebani setiap modul 3,87~kW, yang bagi modul kelas B berarti arus 30,95~A, di atas batas 25~A. Dalam simulasi, modul B terputus (\eng{trip}) pada 0,21~s, bebannya pindah ke modul A, dan modul A ikut terputus pada 0,26~s. Seluruh bank lepas di awal kejadian. Pembagian rata yang dibatasi pada kemampuan modul terlemah memang aman, tetapi hanya menghasilkan 72,7~kW. Pembatas lokal tanpa redistribusi menghasilkan 92,2~kW. Skema adaptif SOP membebani modul A 4,34~kW (34,1~A) dan modul B 2,70~kW (21,3~A), sehingga layanan 100~kW tercapai. Kapasitas ini 37\% lebih besar daripada pembagian rata konservatif.
 
-
-
-
-
-\subsection{Respons Frekuensi}
-Respons frekuensi ditunjukkan pada Gbr.~\ref{fig:frekuensi} dan Tabel~\ref{tab:frek}. Tanpa VI, frekuensi turun ke 49,597~Hz dengan RoCoF $-0{,}803$~Hz/s. Dengan ReVIA, nadir naik ke 49,734~Hz. Deviasi nadir turun dari 0,403~Hz menjadi 0,266~Hz (34\%) dan RoCoF turun 36\%. Energi yang terpakai 0,156~kWh, atau 39\% dari anggaran per kejadian.
-
-Selisih nadir antara ReVIA dan skema rata dengan pembatas lokal hanya 0,008~Hz. Keunggulan ReVIA lebih terlihat pada daya yang dapat dijamin dan pada keamanan modul. Skema rata tanpa SOP sempat membantu sebelum bank trip pada 0,26~s. Setelah itu, sistem berperilaku seperti tanpa VI dan ke-28 modul perlu di-\eng{reset}. Pola yang sama muncul untuk $H=1{,}0$~s (nadir 49,525 menjadi 49,675~Hz) dan $H=2{,}0$~s (49,641 menjadi 49,761~Hz), dan serah-terima ke governor tidak menimbulkan penurunan frekuensi kedua.
-
-\begin{figure}[!t]
+\begin{figure}[t]
 \centering
 \includegraphics[width=\columnwidth]{../figures/fig_frekuensi.pdf}
-\caption{Frekuensi sistem dan daya injeksi VI untuk gangguan 250~kW pada model representatif ($H=1{,}5$~s).}
+\caption{Frekuensi sistem dan daya injeksi VI untuk gangguan 250~kW pada model representatif ($H=1{,}5$~s)}
 \label{fig:frekuensi}
 \end{figure}
 
-\begin{table}[!t]
+\begin{table}[t]
 \centering
-\caption{Metrik Respons Frekuensi (Gangguan 250 kW)}
-\label{tab:frek}
-\footnotesize
-\begin{tabular}{@{}lcccc@{}}
-\toprule
-Kasus & Nadir & $\Delta$ nadir & RoCoF$^{\dagger}$ & Energi \\
- & (Hz) & turun & (Hz/s) & (kWh) \\
-\midrule
+\small
+\setlength{\tabcolsep}{2.4pt}
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+\textbf{Kasus} & \textbf{Nadir} & \textbf{Turun} & \textbf{RoCoF*} & \textbf{Energi} \\
+ & \textbf{(Hz)} & & \textbf{(Hz/s)} & \textbf{(kWh)} \\
+\hline
 Tanpa VI & 49,597 & -- & $-0{,}803$ & -- \\
+\hline
 Rata tanpa SOP & 49,630 & 8\% & $-0{,}722$ & 0,004 \\
+\hline
 Rata konservatif & 49,702 & 26\% & $-0{,}587$ & 0,150 \\
-Rata + \eng{clip} & 49,726 & 32\% & $-0{,}532$ & 0,155 \\
-\textbf{ReVIA} & \textbf{49,734} & \textbf{34\%} & $\mathbf{-0{,}512}$ & 0,156 \\
-\bottomrule
-\multicolumn{5}{@{}l}{\scriptsize $^{\dagger}$diukur pada jendela 500 ms setelah gangguan.}
+\hline
+Rata + pembatas & 49,726 & 32\% & $-0{,}532$ & 0,155 \\
+\hline
+\textbf{Adaptif SOP} & \textbf{49,734} & \textbf{34\%} & $\mathbf{-0{,}512}$ & 0,156 \\
+\hline
 \end{tabular}
+\caption{Metrik respons frekuensi untuk gangguan 250~kW (*diukur pada jendela 500~ms; "turun" adalah penurunan deviasi nadir)}
+\label{tab:frek}
 \end{table}
 
-\subsection{Biaya, Lingkungan, dan Keterbatasan}
-Estimasi biaya ReVIA adalah Rp509,34 juta, termasuk pengujian 35 modul untuk mendapatkan 28 modul layak dan cadangan 15\% (Lampiran~C). Konfigurasi yang sama dengan modul baru diperkirakan Rp568,10 juta. Karena harga masih asumsi, perbandingan akhir akan memakai \eng{net present cost} dan LCA untuk layanan setara 100~kW/10~s.
+\subsection{d. Respons Frekuensi}
+Respons frekuensi ditunjukkan pada Gambar~\ref{fig:frekuensi} dan Tabel~\ref{tab:frek}. Tanpa VI, frekuensi turun ke 49,597~Hz dengan RoCoF $-0{,}803$~Hz/s. Dengan skema adaptif SOP, nadir naik ke 49,734~Hz. Deviasi nadir turun dari 0,403~Hz menjadi 0,266~Hz (34\%) dan RoCoF turun 36\%. Energi yang terpakai 0,156~kWh, atau 39\% dari anggaran per kejadian.
+
+Selisih nadir antara skema adaptif dan skema rata dengan pembatas lokal hanya 0,008~Hz. Keunggulan skema adaptif lebih terlihat pada daya yang dapat dijamin dan pada keamanan modul. Skema rata tanpa SOP sempat membantu sebelum bank terputus pada 0,26~s. Setelah itu, sistem berperilaku seperti tanpa VI dan ke-28 modul perlu diaktifkan ulang. Pola yang sama muncul untuk $H=1{,}0$~s (nadir 49,525 menjadi 49,675~Hz) dan $H=2{,}0$~s (49,641 menjadi 49,761~Hz), dan serah-terima ke \eng{governor} tidak menimbulkan penurunan frekuensi kedua.
+
+\subsection{e. Biaya, Lingkungan, dan Keterbatasan}
+Estimasi biaya unit adalah Rp509,34 juta, termasuk pengujian 35 modul untuk mendapatkan 28 modul layak dan cadangan 15\% (Lampiran~C). Konfigurasi yang sama dengan modul baru diperkirakan Rp568,10 juta. Karena harga masih asumsi, perbandingan akhir akan memakai \eng{net present cost} dan LCA untuk layanan setara 100~kW/10~s.
 
 Keterbatasan rancangan ini adalah parameter dinamis Nusa Penida yang belum diperoleh dari PLN, parameter modul yang masih berupa kriteria penerimaan, dan model agregat yang belum menangkap dinamika PLL serta bus DC. Opsi pembaruan kendali BESS eksisting juga perlu dibandingkan.
 
-\section{KESIMPULAN}
-ReVIA mengubah 28 modul baterai EV bekas yang tidak seragam menjadi layanan \eng{virtual inertia} 100~kW/10~s untuk microgrid Nusa Penida melalui SOP \eng{passport}, laci dengan DC/DC sendiri, dan pembagian daya sebanding SOP. Dengan baterai yang sama, daya aman naik 37\% dibanding pembagian rata konservatif dan trip berantai dapat dicegah. Pada model representatif, deviasi nadir turun 34\% dan RoCoF turun 36\% dengan energi 0,156~kWh per kejadian. Tahap berikutnya adalah validasi dengan data PLN dan modul nyata, lalu uji \eng{hardware-in-the-loop}.
+\section{Kesimpulan}
+Rancangan ini mengubah 28 modul baterai EV bekas yang tidak seragam menjadi layanan \eng{virtual inertia} 100~kW/10~s untuk \eng{microgrid} Nusa Penida melalui SOP \eng{passport}, laci dengan DC/DC sendiri, dan pembagian daya sebanding SOP. Dengan baterai yang sama, daya aman naik 37\% dibanding pembagian rata konservatif dan pemutusan berantai dapat dicegah. Pada model representatif, deviasi nadir turun 34\% dan RoCoF turun 36\% dengan energi 0,156~kWh per kejadian. Tahap berikutnya adalah validasi dengan data PLN dan modul nyata, lalu uji \eng{hardware-in-the-loop}.
 
-\begin{thebibliography}{99}
-\footnotesize
-\bibitem{b1} Dinas Ketenagakerjaan dan ESDM Provinsi Bali, ``Menghadiri rapat progres implementasi peta jalan Nusa Penida 100\% energi terbarukan,'' 27 Apr. 2026. [Daring]. Tersedia: \url{https://disnakeresdm.baliprov.go.id/menghadiri-rapat-progres-implementasi-peta-jalan-nusa-penida-100-energi-terbarukan/}
-\bibitem{b2} BRIDA Provinsi Bali, ``Kunjungan ke lokasi PLTD di Desa Kutampi dan PLTS Hybrid di Desa Suana Nusa Penida,'' 17 Jul. 2025. [Daring]. Tersedia: \url{https://brida.baliprov.go.id/kunjungan-ke-lokasi-pembangkit-listrik-tenaga-diesel-pltd-di-desa-kutampi-dan-pembangkit-listrik-tenaga-surya-plts-hybrid-di-desa-suana-nusa-penida}
-\bibitem{b3} Ditjen Ketenagalistrikan, Kementerian ESDM, \textit{Laporan Kinerja Ditjen Ketenagalistrikan Tahun 2024}. [Daring]. Tersedia: \url{https://www.esdm.go.id/assets/media/content/content-laporan-kinerja-ditjen-ketenagalistrikan-tahun-2024.pdf}
-\bibitem{b4} PT PLN (Persero), ``PLN operasikan smart microgrid berbasis energi hijau di Nusa Penida Bali,'' Siaran Pers No. 241.PR/STH.01.05/XI/2025, 13 Nov. 2025. [Daring]. Tersedia: \url{https://web.pln.co.id/media/siaran-pers/2025/11/pln-operasikan-smart-microgrid-berbasis-energi-hijau-di-nusa-penida-bali}
-\bibitem{b5} P. Kundur, \textit{Power System Stability and Control}. New York, NY, USA: McGraw-Hill, 1994.
-\bibitem{b6} U. Tamrakar, D. Shrestha, M. Maharjan, B. P. Bhattarai, T. M. Hansen, and R. Tonkoski, ``Virtual inertia: Current trends and future directions,'' \textit{Appl. Sci.}, vol. 7, no. 7, Art. no. 654, 2017, doi: 10.3390/app7070654.
-\bibitem{b7} A. Hassan \textit{et al.}, ``Second-life batteries: A review on power grid applications, degradation mechanisms, and power electronics interface architectures,'' \textit{Batteries}, vol. 9, no. 12, Art. no. 571, 2023, doi: 10.3390/batteries9120571.
-\bibitem{b8} C. White, B. Thompson, and L. G. Swan, ``Repurposed electric vehicle battery performance in second-life electricity grid frequency regulation service,'' \textit{J. Energy Storage}, vol. 28, Art. no. 101278, 2020, doi: 10.1016/j.est.2020.101278.
-\bibitem{b9} C. Liu, X. Cai, and Q. Chen, ``Self-adaptation control of second-life battery energy storage system based on cascaded H-bridge converter,'' \textit{IEEE J. Emerg. Sel. Topics Power Electron.}, early access, 2018, doi: 10.1109/JESTPE.2018.2886965.
-\bibitem{b10} M. Rasheed \textit{et al.}, ``Active reconditioning of retired lithium-ion battery packs from electric vehicles for second-life applications,'' \textit{IEEE J. Emerg. Sel. Topics Power Electron.}, vol. 12, no. 1, pp. 388--404, 2024, doi: 10.1109/JESTPE.2023.3325251.
-\end{thebibliography}
+\section{Daftar Pustaka}
+{\raggedright\setlength{\parindent}{0pt}\everypar{\hangindent=1cm\hangafter=1}
 
-\clearpage
+BRIDA Provinsi Bali. (2025, 17 Juli). \textit{Kunjungan ke lokasi Pembangkit Listrik Tenaga Diesel (PLTD) di Desa Kutampi dan Pembangkit Listrik Tenaga Surya (PLTS) Hybrid di Desa Suana Nusa Penida}. \url{https://brida.baliprov.go.id/kunjungan-ke-lokasi-pembangkit-listrik-tenaga-diesel-pltd-di-desa-kutampi-dan-pembangkit-listrik-tenaga-surya-plts-hybrid-di-desa-suana-nusa-penida}
+
+Dinas Ketenagakerjaan dan ESDM Provinsi Bali. (2026, 27 April). \textit{Menghadiri rapat progres implementasi peta jalan Nusa Penida 100\% energi terbarukan}. \url{https://disnakeresdm.baliprov.go.id/menghadiri-rapat-progres-implementasi-peta-jalan-nusa-penida-100-energi-terbarukan/}
+
+Direktorat Jenderal Ketenagalistrikan. (t.t.). \textit{Laporan kinerja Direktorat Jenderal Ketenagalistrikan tahun 2024}. Kementerian Energi dan Sumber Daya Mineral. \url{https://www.esdm.go.id/assets/media/content/content-laporan-kinerja-ditjen-ketenagalistrikan-tahun-2024.pdf}
+
+Hassan, A., Khan, S. A., Li, R., Su, W., Zhou, X., Wang, M., \& Wang, B. (2023). Second-life batteries: A review on power grid applications, degradation mechanisms, and power electronics interface architectures. \textit{Batteries, 9}(12), 571. \url{https://doi.org/10.3390/batteries9120571}
+
+Kundur, P. (1994). \textit{Power system stability and control}. McGraw-Hill.
+
+Liu, C., Cai, X., \& Chen, Q. (2018). Self-adaptation control of second-life battery energy storage system based on cascaded H-bridge converter. \textit{IEEE Journal of Emerging and Selected Topics in Power Electronics}. Advance online publication. \url{https://doi.org/10.1109/JESTPE.2018.2886965}
+
+PT PLN (Persero). (2025, 13 November). \textit{PLN operasikan smart microgrid berbasis energi hijau di Nusa Penida Bali} (Siaran Pers No. 241.PR/STH.01.05/XI/2025). \url{https://web.pln.co.id/media/siaran-pers/2025/11/pln-operasikan-smart-microgrid-berbasis-energi-hijau-di-nusa-penida-bali}
+
+Rasheed, M., Hassan, R., Kamel, M., Wang, H., Zane, R., Tong, S., \& Smith, K. (2024). Active reconditioning of retired lithium-ion battery packs from electric vehicles for second-life applications. \textit{IEEE Journal of Emerging and Selected Topics in Power Electronics, 12}(1), 388--404. \url{https://doi.org/10.1109/JESTPE.2023.3325251}
+
+Tamrakar, U., Shrestha, D., Maharjan, M., Bhattarai, B. P., Hansen, T. M., \& Tonkoski, R. (2017). Virtual inertia: Current trends and future directions. \textit{Applied Sciences, 7}(7), 654. \url{https://doi.org/10.3390/app7070654}
+
+White, C., Thompson, B., \& Swan, L. G. (2020). Repurposed electric vehicle battery performance in second-life electricity grid frequency regulation service. \textit{Journal of Energy Storage, 28}, 101278. \url{https://doi.org/10.1016/j.est.2020.101278}
+\par}
+
 \onecolumn
 \section*{Lampiran}
+\subsection*{A. Parameter Rancangan dan Simulasi}
+\begin{center}
 \small
-\noindent\textbf{A. Parameter Rancangan dan Simulasi}\\[3pt]
-\begin{tabular}{@{}p{6.4cm}p{4.6cm}p{5.6cm}@{}}
-\toprule
-Parameter & Nilai & Status \\
-\midrule
-Kimia dan konfigurasi modul & NMC/HC, 36s2p & Acuan sampel EnerDel [8] \\
-Tegangan rerata; kapasitas nominal & 126 V; 31,5 Ah & Data acuan [8] \\
+\begin{tabular}{|p{6.0cm}|p{4.6cm}|p{5.4cm}|}
+\hline
+\textbf{Parameter} & \textbf{Nilai} & \textbf{Status} \\
+\hline
+Kimia dan konfigurasi modul & NMC/HC, 36s2p & Acuan sampel EnerDel (White dkk., 2020) \\
+\hline
+Tegangan rerata; kapasitas nominal & 126 V; 31,5 Ah & Data acuan (White dkk., 2020) \\
+\hline
 Jumlah modul aktif & 20 kelas A + 8 kelas B & Asumsi (35 diuji, 80\% lolos) \\
+\hline
 Kapasitas efektif A/B & 25,2 / 22,05 Ah & Asumsi SOH 80\% / 70\% \\
+\hline
 OCV titik hitung; $R_{10\,\mathrm{s}}$ A/B & 130 V; 0,08 / 0,16 $\Omega$ & Asumsi, diganti hasil uji \\
+\hline
 Batas arus pengosongan A/B & 40 / 25 A & Kriteria penerimaan \\
+\hline
 Jendela SOC; suhu titik hitung & 30--70\% (awal 50\%); 25 °C & Asumsi operasi \\
+\hline
 DC/DC per modul; bus DC; inverter & 6 kW; 750 V; 125 kVA & Asumsi arsitektur \\
+\hline
 Efisiensi satu arah; daya bantu & 94\%; 2 kW & Asumsi, perlu diukur \\
+\hline
 $K_v$; $K_d$; $\gamma$ & 80 kW·s/Hz; 300 kW/Hz; 0,9 & Parameter desain \\
+\hline
 Filter RoCoF; latensi; loop arus inverter & 50 ms; 100 ms; 20 ms & Target uji \\
-Diesel; $H$; droop; lag governor--mesin & 3 MVA; 1,5 s; 5\%; 0,5 s & Representatif, bukan data PLN \\
+\hline
+Diesel; $H$; \eng{droop}; lag \eng{governor}--mesin & 3 MVA; 1,5 s; 5\%; 0,5 s & Representatif, bukan data PLN \\
+\hline
 Beban; redaman beban; kendali sekunder & 2,5 MW; 1 pu; 0,05 MW/(Hz·s) & Representatif \\
-Penundaan trip BMS (skema rata) & 50 ms & Asumsi \\
-\bottomrule
+\hline
+Penundaan pemutusan BMS (skema rata) & 50 ms & Asumsi \\
+\hline
 \end{tabular}
+\captionof{table}{Parameter rancangan dan simulasi}
+\end{center}
 
-\vspace{8pt}
-\noindent\textbf{B. Perhitungan Daya, Arus, dan Energi}\\[2pt]
-$V_A=130-40(0{,}08)=126{,}8$ V, $SOP_A=5{,}072$ kW; $V_B=130-25(0{,}16)=126{,}0$ V, $SOP_B=3{,}150$ kW; $\sum SOP=20(5{,}072)+8(3{,}150)=126{,}64$ kW. Kemampuan bersih $0{,}94[0{,}9(126{,}64)-2]=105{,}26$ kW. Kebutuhan terminal untuk 100 kW bersih adalah $100/0{,}94+2=108{,}38$ kW dengan faktor pembagian $108{,}38/126{,}64=0{,}856$. Alokasi ReVIA: $p_A=4{,}341$ kW, $p_B=2{,}696$ kW. Arus dihitung dengan $I=\big(U-\sqrt{U^2-4RP}\big)/(2R)$, sehingga $I_A=34{,}11$ A dan $I_B=21{,}30$ A. Pembagian rata: $108{,}38/28=3{,}871$ kW per modul dan $I_B=30{,}95$ A. Setelah modul B lepas, $108{,}38/20=5{,}42$ kW per modul A dan $I_A=42{,}8$ A $>$ 40 A. Rata + clip: $0{,}94[20(3{,}871)+8(2{,}835)-2]=92{,}21$ kW. Rata konservatif: $0{,}94[28(0{,}9)(3{,}15)-2]=72{,}74$ kW. Energi AC per kejadian $100\cdot10/3600=0{,}278$ kWh. Energi di sisi terminal 0,301 kWh. Rugi internal $20I_A^2R_A+8I_B^2R_B=2{,}44$ kW selama 10 s menambah 0,0068 kWh. Dengan margin 25\%, totalnya $0{,}385\approx0{,}40$ kWh. Energi efektif bank adalah $126[20(25{,}2)+8(22{,}05)]/1000=85{,}73$ kWh. Jika satu modul A dilepas, kemampuan bersih masih 100,97 kW.
+\subsection*{B. Perhitungan Daya, Arus, dan Energi}
+$V_A=130-40(0{,}08)=126{,}8$ V, $SOP_A=5{,}072$ kW; $V_B=130-25(0{,}16)=126{,}0$ V, $SOP_B=3{,}150$ kW; $\sum SOP=20(5{,}072)+8(3{,}150)=126{,}64$ kW. Kemampuan bersih $0{,}94[0{,}9(126{,}64)-2]=105{,}26$ kW. Kebutuhan terminal untuk 100 kW bersih adalah $100/0{,}94+2=108{,}38$ kW dengan faktor pembagian $108{,}38/126{,}64=0{,}856$. Alokasi adaptif: $p_A=4{,}341$ kW, $p_B=2{,}696$ kW. Arus dihitung dengan $I=\big(U-\sqrt{U^2-4RP}\big)/(2R)$, sehingga $I_A=34{,}11$ A dan $I_B=21{,}30$ A. Pembagian rata: $108{,}38/28=3{,}871$ kW per modul dan $I_B=30{,}95$ A. Setelah modul B lepas, $108{,}38/20=5{,}42$ kW per modul A dan $I_A=42{,}8$ A $>$ 40 A. Rata + pembatas: $0{,}94[20(3{,}871)+8(2{,}835)-2]=92{,}21$ kW. Rata konservatif: $0{,}94[28(0{,}9)(3{,}15)-2]=72{,}74$ kW. Energi AC per kejadian $100\cdot10/3600=0{,}278$ kWh. Energi di sisi terminal 0,301 kWh. Rugi internal $20I_A^2R_A+8I_B^2R_B=2{,}44$ kW selama 10 s menambah 0,0068 kWh. Dengan margin 25\%, totalnya $0{,}385\approx0{,}40$ kWh. Energi efektif bank adalah $126[20(25{,}2)+8(22{,}05)]/1000=85{,}73$ kWh. Jika satu modul A dilepas, kemampuan bersih masih 100,97 kW.
 
-\vspace{8pt}
-\noindent\textbf{C. Rencana Anggaran Biaya (juta rupiah, asumsi 2026)}\\[3pt]
-\begin{tabular}{@{}p{8.2cm}p{5.6cm}r@{}}
-\toprule
-Komponen & Basis & Biaya \\
-\midrule
+\subsection*{C. Rencana Anggaran Biaya}
+\begin{center}
+\small
+\begin{tabular}{|p{8.0cm}|p{5.2cm}|r|}
+\hline
+\textbf{Komponen} & \textbf{Basis} & \textbf{Biaya (juta Rp)} \\
+\hline
 Pengadaan modul bekas & 35 × Rp1,50 juta & 52,50 \\
+\hline
 Pengujian dan karakterisasi & 35 × Rp0,40 juta & 14,00 \\
-Repurposing mekanik, BMS, dan sensor & 28 × Rp0,75 juta & 21,00 \\
+\hline
+Penyesuaian mekanik, BMS, dan sensor & 28 × Rp0,75 juta & 21,00 \\
+\hline
 DC/DC terisolasi dua arah & 28 × Rp3,00 juta & 84,00 \\
+\hline
 Inverter 125 kVA dan trafo antarmuka & 1 + 1 unit & 125,00 \\
-Proteksi DC/AC dan monitoring isolasi & paket & 40,00 \\
+\hline
+Proteksi DC/AC dan pemantauan isolasi & paket & 40,00 \\
+\hline
 Kabinet, pendingin, proteksi kebakaran & paket & 50,00 \\
-Kendali, \eng{engineering}, \eng{commissioning}, logistik & paket & 55,00 \\
+\hline
+Kendali, rekayasa, komisioning, logistik & paket & 55,00 \\
+\hline
 Penanganan 7 modul yang ditolak & 7 × Rp0,20 juta & 1,40 \\
-\midrule
+\hline
 Subtotal / cadangan 15\% & & 442,90 / 66,44 \\
+\hline
 \textbf{Total} & & \textbf{509,34} \\
-\bottomrule
-\end{tabular}\\[3pt]
-Pembanding dengan modul baru (28 × Rp4 juta, tanpa modul ditolak, komponen lain sama) adalah Rp568,10 juta. Semua harga merupakan asumsi dan bukan penawaran vendor.
+\hline
+\end{tabular}
+\captionof{table}{Rencana anggaran biaya ilustratif (asumsi harga 2026, bukan penawaran vendor)}
+\end{center}
+Pembanding dengan modul baru (28 × Rp4 juta, tanpa modul ditolak, komponen lain sama) adalah Rp568,10 juta.
 
-\vspace{8pt}
-\noindent\textbf{D. Posisi Kebaruan dan Peta Jalan}\\[3pt]
-\begin{tabular}{@{}p{3.3cm}p{6.3cm}p{7.0cm}@{}}
-\toprule
-Unsur & Sudah ada dalam literatur & Yang ditambahkan ReVIA \\
-\midrule
-Baterai EV bekas & Seleksi, degradasi, BMS [7], [8]; rekondisi [10] & Hasil uji langsung menjadi batas daya layanan (SOP \eng{passport}) \\
-Pembagian daya adaptif & Berbasis kapasitas dan SOC pada CHB 5 kW [9] & Berbasis SOP 10 s untuk layanan cepat, dengan redistribusi \\
-\eng{Virtual inertia} & Konsep kendali yang sudah mapan [6] & Gain inersia $\lambda K_v$ mengikuti kemampuan nyata bank bekas \\
-Konteks Bali & Target Nusa Penida 100\% EBT [1], [4] & Unit tambahan modular dengan pembanding yang jelas \\
-\bottomrule
-\end{tabular}\\[4pt]
-Peta jalan: (1) data dinamis dan perbandingan dengan pembaruan kendali BESS eksisting bersama PLN; (2) pengadaan dan karakterisasi modul nyata; (3) kalibrasi model SOP dan simulasi EMT; (4) uji \eng{hardware-in-the-loop} skema rata dan ReVIA; (5) demonstrasi terbatas di bawah pengawasan operator. Kode simulasi tersedia di repositori tim.
+\subsection*{D. Posisi Kebaruan dan Peta Jalan}
+\begin{center}
+\small
+\begin{tabular}{|p{3.2cm}|p{6.2cm}|p{6.8cm}|}
+\hline
+\textbf{Unsur} & \textbf{Sudah ada dalam literatur} & \textbf{Kontribusi penelitian ini} \\
+\hline
+Baterai EV bekas & Seleksi, degradasi, BMS (Hassan dkk., 2023; White dkk., 2020); rekondisi (Rasheed dkk., 2024) & Hasil uji langsung menjadi batas daya layanan (SOP \eng{passport}) \\
+\hline
+Pembagian daya adaptif & Berbasis kapasitas dan SOC pada CHB 5 kW (Liu dkk., 2018) & Berbasis SOP 10 s untuk layanan cepat, dengan redistribusi \\
+\hline
+\eng{Virtual inertia} & Konsep kendali yang sudah mapan (Tamrakar dkk., 2017) & Penguatan inersia $\lambda K_v$ mengikuti kemampuan nyata bank bekas \\
+\hline
+Konteks Bali & Target Nusa Penida 100\% EBT (Dinas Ketenagakerjaan dan ESDM Provinsi Bali, 2026) & Unit tambahan modular dengan pembanding yang jelas \\
+\hline
+\end{tabular}
+\captionof{table}{Posisi kebaruan terhadap literatur}
+\end{center}
+Peta jalan: (1) data dinamis dan perbandingan dengan pembaruan kendali BESS eksisting bersama PLN; (2) pengadaan dan karakterisasi modul nyata; (3) kalibrasi model SOP dan simulasi EMT; (4) uji \eng{hardware-in-the-loop} skema rata dan adaptif; (5) demonstrasi terbatas di bawah pengawasan operator.
 
 \end{document}

@@ -64,10 +64,10 @@ def fig_frekuensi(res):
         a.yaxis.grid(True, color=C["grid"], lw=0.6); a.set_axisbelow(True)
     lab = dict(fontsize=8)
     ax[0].text(0.62, 49.585, "tanpa VI  49,597 Hz", color=C["base"], **lab)
-    ax[0].text(2.1, 49.885, "ReVIA, nadir 49,734 Hz", color=C["revia"], weight="bold", **lab)
+    ax[0].text(2.1, 49.885, "adaptif SOP, nadir 49,734 Hz", color=C["revia"], weight="bold", **lab)
     ax[0].text(2.3, 49.70, "rata tanpa SOP:\nbank trip pada 0,26 s", color=C["trip"], **lab)
-    ax[1].text(0.62, 96, "ReVIA 100 kW", color=C["revia"], weight="bold", **lab)
-    ax[1].text(0.62, 84, "rata + clip 92 kW", color=C["clip"], **lab)
+    ax[1].text(0.62, 96, "adaptif SOP 100 kW", color=C["revia"], weight="bold", **lab)
+    ax[1].text(0.62, 84, "rata + pembatas 92 kW", color=C["clip"], **lab)
     ax[1].annotate("trip berantai", xy=(0.27, 30), xytext=(0.9, 18), color=C["trip"], fontsize=8,
                    arrowprops=dict(arrowstyle="-", color=C["trip"], lw=0.6))
     for a in ax:
@@ -81,7 +81,7 @@ def fig_frekuensi(res):
 def fig_alokasi(res, log):
     fig, ax = plt.subplots(1, 2, figsize=(2 * COLW + 0.3, 2.05), gridspec_kw=dict(width_ratios=[1, 1.25], wspace=0.38))
     # (a) daya yang dapat dijanjikan
-    names = ["Rata tanpa SOP", "Rata\nkonservatif", "Rata + clip", "ReVIA\n(adaptif SOP)"]
+    names = ["Rata tanpa SOP", "Rata\nkonservatif", "Rata +\npembatas", "Adaptif SOP\n(usulan)"]
     vals = [0, 72.7, 92.2, 100.0]
     cols = [C["trip"], C["cons"], C["clip"], C["revia"]]
     y = np.arange(4)[::-1]
@@ -89,7 +89,7 @@ def fig_alokasi(res, log):
     for yi, v, nm in zip(y, vals, names):
         ax[0].text(v + 2 if v else 2, yi, "trip" if v == 0 else f"{v:.1f} kW".replace(".", ","),
                    va="center", fontsize=8.5, color=C["trip"] if v == 0 else C["ink"],
-                   weight="bold" if "ReVIA" in nm else "normal")
+                   weight="bold" if "Adaptif" in nm else "normal")
     ax[0].set_yticks(y, names, fontsize=8.5)
     ax[0].set(xlim=(0, 118), xlabel="Layanan bersih yang aman (kW)")
     ax[0].tick_params(axis="y", length=0)
@@ -109,8 +109,8 @@ def fig_alokasi(res, log):
     ax[1].plot(tl, lg[:, 2], color=C["trip"], lw=1.0)
     ax[1].plot(t - 1, ia, color=C["revia"], lw=1.6, ls=(0, (4, 1.5)))
     ax[1].plot(t - 1, ib, color=C["revia"], lw=1.6)
-    ax[1].text(1.45, 17.3, "ReVIA, modul A (- -)", fontsize=7.5, color=C["revia"])
-    ax[1].text(1.45, 5.0, "ReVIA, modul B (—)", fontsize=7.5, color=C["revia"])
+    ax[1].text(1.45, 17.3, "adaptif, modul A (- -)", fontsize=7.5, color=C["revia"])
+    ax[1].text(1.45, 5.0, "adaptif, modul B (—)", fontsize=7.5, color=C["revia"])
     ax[1].text(0.3, 45.6, "rata tanpa SOP: B trip 0,21 s, A trip 0,26 s", fontsize=7.5, color=C["trip"])
     ax[1].set(xlim=(0, 2.2), ylim=(0, 49), xlabel="Waktu setelah gangguan (s)", ylabel="Arus per modul (A)")
     ax[1].yaxis.grid(True, color=C["grid"], lw=0.6); ax[1].set_axisbelow(True)
