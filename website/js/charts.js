@@ -43,7 +43,7 @@ const idx = (d, t) => Math.round((t - d.t[0]) / d.dt);
 function problemChart(host, d, readout) {
   const A = d.cases['Tanpa VI'], R = d.cases['ReVIA (adaptif SOP)'];
   let played = false, paths = [];
-  const x0 = -0.2, x1 = 3, y0 = 49.55, y1 = 50.02;
+  const x0 = -0.2, x1 = 3, y0 = 49.5, y1 = 50.02;
 
   const setReadout = (t, a, b) => {
     readout.querySelector('.r-t').textContent = 't = ' + fmt(t, 2) + ' s';
@@ -89,9 +89,9 @@ function problemChart(host, d, readout) {
     const gN = s('g', { class: 'nadirs', opacity: played ? 1 : 0, style: 'transition: opacity .5s 1.3s' }, svg);
     s('circle', { cx: X(nA.t_nadir_s), cy: Y(nA.nadir_Hz), r: 4.5, fill: '#fff', stroke: C.ink, 'stroke-width': 1.5 }, gN);
     s('circle', { cx: X(nR.t_nadir_s), cy: Y(nR.nadir_Hz), r: 4.5, fill: '#fff', stroke: C.teal, 'stroke-width': 2 }, gN);
-    const ax = X(nA.t_nadir_s) + 12, ay = Y(nA.nadir_Hz);
-    s('text', { x: ax, y: ay + 1, class: 'lbl', fill: C.ink, style: `fill:${C.ink}` }, gN, 'Tanpa VI');
-    s('text', { x: ax, y: ay + 15, class: 'lbl-s' }, gN, 'nadir ' + fmt(nA.nadir_Hz) + ' Hz');
+    const ax = X(nA.t_nadir_s), ay = Y(nA.nadir_Hz);
+    s('text', { x: ax, y: ay + 22, class: 'lbl', 'text-anchor': 'middle', style: `fill:${C.ink}` }, gN, 'Tanpa VI');
+    s('text', { x: ax, y: ay + 36, class: 'lbl-s', 'text-anchor': 'middle' }, gN, 'nadir ' + fmt(nA.nadir_Hz) + ' Hz');
     const rx = X(0.72), ry = Y(49.972);
     s('line', { x1: X(nR.t_nadir_s) + 3, y1: Y(nR.nadir_Hz) - 5, x2: rx - 6, y2: ry + 17, stroke: C.teal, 'stroke-width': 1 }, gN);
     s('text', { x: rx, y: ry, class: 'lbl', style: `fill:${C.teal}` }, gN, 'ReVIA');

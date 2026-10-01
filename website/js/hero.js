@@ -43,7 +43,7 @@ export async function initHero() {
   S.onResize((w, h) => {
     const wide = w >= 900;
     if (wide) camera.setViewOffset(w, h, -w * 0.21, 0, w, h); else camera.clearViewOffset();
-    if (!userZoom) setDist(fitDist(w / h) * (wide ? 1.27 : 1.05));
+    if (!userZoom) setDist(fitDist(w / h) * (wide ? 1.36 : 1.05));
   });
   camera.position.copy(target).add(dir.clone().multiplyScalar(10));
   S.fit();
