@@ -14,7 +14,7 @@ export async function initDrawer() {
 
   const S = createStage(host, { sun: [-1.2, 3.2, 2.2], target: [0, 0, 0], extent: 1.5, shadowOpacity: 0.2 });
   const { scene, camera, renderer } = S;
-  const target = new THREE.Vector3(0, 0.2, 0.12);
+  const target = new THREE.Vector3(0, 0.27, 0.12);
   const dir = new THREE.Vector3(1.9, 1.27, 2.13).normalize();
   camera.fov = 26;
 
@@ -33,7 +33,7 @@ export async function initDrawer() {
   let userZoom = false;
   S.onResize((w, h) => {
     const k = Math.max(1, 1.45 / (w / h));
-    camera.position.copy(target).add(dir.clone().multiplyScalar(3.15 * k * 1.02));
+    camera.position.copy(target).add(dir.clone().multiplyScalar(2.85 * k));
   });
   S.fit();
   controls.update();

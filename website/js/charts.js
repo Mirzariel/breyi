@@ -3,7 +3,7 @@ const NS = 'http://www.w3.org/2000/svg';
 const C = { ink: '#262c31', teal: '#0f8f84', amber: '#e8a33d', amberInk: '#8f5f10', grid: '#e3e6e4', axis: '#c3cac6', muted: '#5d686e', ref: '#a3acb1', red: '#c4452e' };
 const reduced = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-export const fmt = (n, d = 3) => Number(n).toFixed(d).replace('.', ',');
+export const fmt = (n, d = 3) => Number(n).toFixed(d).replace('.', ',').replace('-', '\u2212');
 
 function s(tag, attrs = {}, parent, text) {
   const el = document.createElementNS(NS, tag);

@@ -354,7 +354,13 @@
       <div class="chips" id="caseChips" role="group" aria-label="Pilih skema"></div>
       <div class="freq-grid">
         <div class="chart-host big" data-chart="cases" role="img" aria-label="Grafik frekuensi dan daya injeksi untuk skema terpilih."></div>
-        <div class="metrics" id="metrics" aria-live="polite"></div>
+        <div class="side">
+          <div class="metrics" id="metrics" aria-live="polite"></div>
+          <div class="reading">
+            <p><i class="sw"></i>Skema terpilih. <i class="sw g" style="margin-left:6px"></i>Tanpa VI sebagai acuan.</p>
+            <p>Atas: frekuensi. Bawah: daya yang disuntikkan bank ke microgrid. Gangguan terjadi di t = 0 dan injeksi mulai naik sekitar 100 ms kemudian.</p>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -371,13 +377,9 @@
     <div class="col-5 col-m-12 copy reveal">
       <h2 id="h-biaya">Modul bekas lebih murah, dan dipakai lebih lama.</h2>
       <p>Untuk konfigurasi yang sama, modul bekas lebih murah dari modul baru walaupun ada biaya uji tambahan: 35 modul diuji untuk mendapat 28 yang layak.</p>
-      <ul class="impact">
-        <li><b>28 modul</b> mendapat pemakaian kedua alih-alih jadi limbah: 20 kelas A, 8 kelas B.</li>
-        <li><b>0,156 kWh</b> terpakai per kejadian dari bank sekitar 85,7 kWh. Yang menentukan adalah daya, jadi modul yang sudah turun SOH masih berguna.</li>
-        <li>Mendukung target <b>100% energi terbarukan Nusa Penida pada 2030</b> dengan menutup celah inersia saat diesel dikurangi.</li>
-      </ul>
     </div>
-    <div class="col-7 col-m-12 card cost-card reveal" id="costCard">
+    <div class="col-7 col-m-12 right-stack reveal">
+    <div class="card cost-card" id="costCard">
       <div class="card-head">
         <h3 class="h3">Biaya ilustratif, konfigurasi sama</h3>
       </div>
@@ -395,6 +397,12 @@
       </ul>
       <p class="small muted">Selisih Rp58,76 juta. Estimasi ilustratif, bukan penawaran vendor.</p>
     </div>
+          <ul class="impact">
+        <li><b>28 modul</b> mendapat pemakaian kedua alih-alih jadi limbah: 20 kelas A, 8 kelas B.</li>
+        <li><b>0,156 kWh</b> terpakai per kejadian dari bank sekitar 85,7 kWh. Yang menentukan adalah daya, jadi modul yang sudah turun SOH masih berguna.</li>
+        <li>Mendukung target <b>100% energi terbarukan Nusa Penida pada 2030</b> dengan menutup celah inersia saat diesel dikurangi.</li>
+      </ul>
+  </div>
   </div>
 </section>
 
